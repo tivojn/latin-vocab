@@ -96,7 +96,7 @@ function setQuestionFormat(format) {
 async function fetchChapters() {
   try {
     console.log('Fetching chapters...');
-    const response = await fetch('/Latin-Vocab-Shadcn/api/vocabulary/chapters');
+    const response = await fetch('/api/vocabulary/chapters');
     
     if (!response.ok) {
       throw new Error('Failed to fetch chapters');
@@ -154,7 +154,7 @@ async function fetchNextQuestion() {
       queryParams += `&username=${appState.currentUser}`;
     }
     
-    const response = await fetch(`/Latin-Vocab-Shadcn/api/practice/next-question${queryParams}`);
+    const response = await fetch(`/api/practice/next-question${queryParams}`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch question');
@@ -184,7 +184,7 @@ async function submitAnswer(selectedAnswer, format) {
   try {
     const { latinWord } = appState.currentQuestion;
     
-    const response = await fetch('/Latin-Vocab-Shadcn/api/practice/submit-answer', {
+    const response = await fetch('/api/practice/submit-answer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -436,7 +436,7 @@ async function handleLogin() {
   }
   
   try {
-    const response = await fetch('/Latin-Vocab-Shadcn/api/users/login', {
+    const response = await fetch('/api/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -507,7 +507,7 @@ function updateUIAfterLogin(userData) {
 
 async function fetchUserProgress(username) {
   try {
-    const response = await fetch(`/Latin-Vocab-Shadcn/api/users/${username}/progress`);
+    const response = await fetch(`/api/users/${username}/progress`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch user progress');

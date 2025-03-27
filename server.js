@@ -10,81 +10,16 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-// Default data (used as fallback in Vercel environment)
-const DEFAULT_VOCABULARY = {
-  "chapters": [
-    {
-      "chapterNumber": 1,
-      "chapterTitle": "House and Family",
-      "words": [
-        {
-          "latin": "domus",
-          "english": "house",
-          "latinSentence": "Domus nostra magna est.",
-          "englishSentence": "Our house is large."
-        },
-        {
-          "latin": "familia",
-          "english": "family",
-          "latinSentence": "Familia mea parva est.",
-          "englishSentence": "My family is small."
-        },
-        {
-          "latin": "pater",
-          "english": "father",
-          "latinSentence": "Pater meus agricola est.",
-          "englishSentence": "My father is a farmer."
-        }
-      ]
-    },
-    {
-      "chapterNumber": 2,
-      "chapterTitle": "Daily Life and Objects",
-      "words": [
-        {
-          "latin": "cibus",
-          "english": "food",
-          "latinSentence": "Cibus est in mensa.",
-          "englishSentence": "The food is on the table."
-        },
-        {
-          "latin": "aqua",
-          "english": "water",
-          "latinSentence": "Aqua in fluvio est.",
-          "englishSentence": "Water is in the river."
-        }
-      ]
-    }
-  ]
-};
-
-const DEFAULT_USERS = {
-  "users": [
-    {
-      "username": "testuser",
-      "passwordHash": "tempHash",
-      "chapterProgress": 1,
-      "vocabProgress": {}
-    }
-  ]
-};
-
 // Path to data files
 const VOCABULARY_FILE = path.join(__dirname, 'vocabulary.json');
 const USERS_FILE = path.join(__dirname, 'users.json');
 
-// Helper function to read JSON files (with fallback for Vercel environment)
+// Helper function to read JSON files
 function readJsonFile(filePath) {
   console.log(`Reading file: ${filePath}`);
   try {
     if (!fs.existsSync(filePath)) {
-      console.warn(`File does not exist: ${filePath}, using default data`);
-      // Return default data based on the file requested
-      if (filePath.includes('vocabulary')) {
-        return DEFAULT_VOCABULARY;
-      } else if (filePath.includes('users')) {
-        return DEFAULT_USERS;
-      }
+      console.error(`File does not exist: ${filePath}`);
       return null;
     }
     
@@ -97,36 +32,17 @@ function readJsonFile(filePath) {
       return jsonData;
     } catch (parseError) {
       console.error(`Error parsing JSON from ${filePath}:`, parseError);
-      // Return default data in case of parse error
-      if (filePath.includes('vocabulary')) {
-        return DEFAULT_VOCABULARY;
-      } else if (filePath.includes('users')) {
-        return DEFAULT_USERS;
-      }
       return null;
     }
   } catch (error) {
     console.error(`Error reading file ${filePath}:`, error);
-    // Return default data in case of read error
-    if (filePath.includes('vocabulary')) {
-      return DEFAULT_VOCABULARY;
-    } else if (filePath.includes('users')) {
-      return DEFAULT_USERS;
-    }
     return null;
   }
 }
 
-// Helper function to write JSON files with special handling for Vercel
+// Helper function to write JSON files
 function writeJsonFile(filePath, data) {
   try {
-    // In production (likely Vercel), log but don't actually write
-    if (process.env.NODE_ENV === 'production') {
-      console.log(`[Vercel Mode] Would write to ${filePath}, but skipping in production`);
-      return true;
-    }
-    
-    // Only write file in development
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (error) {
@@ -135,20 +51,8 @@ function writeJsonFile(filePath, data) {
   }
 }
 
-// Handle both prefixed and non-prefixed API routes
-// For deploying under /Latin-Vocab-Shadcn/ path
-const handleBothPaths = (route, handler) => {
-  app.get(route, handler); // Standard route
-  app.get(`/Latin-Vocab-Shadcn${route}`, handler); // Route with prefix
-};
-
-const handleBothPathsPost = (route, handler) => {
-  app.post(route, handler); // Standard route
-  app.post(`/Latin-Vocab-Shadcn${route}`, handler); // Route with prefix
-};
-
 // Get all chapters
-handleBothPaths('/api/vocabulary/chapters', (req, res) => {
+app.get('/api/vocabulary/chapters', (req, res) => {
   console.log('GET /api/vocabulary/chapters requested');
   try {
     const vocabularyData = readJsonFile(VOCABULARY_FILE);
@@ -161,6 +65,7 @@ handleBothPaths('/api/vocabulary/chapters', (req, res) => {
     console.log(`Found ${vocabularyData.chapters.length} chapters in vocabulary data`);
     
     // For simplicity, return all chapters
+    // In a real app, you might filter based on user progress
     res.json(vocabularyData.chapters);
   } catch (error) {
     console.error('Error in /api/vocabulary/chapters:', error);
@@ -169,7 +74,7 @@ handleBothPaths('/api/vocabulary/chapters', (req, res) => {
 });
 
 // Get chapter by number
-handleBothPaths('/api/vocabulary/chapters/:chapterNumber', (req, res) => {
+app.get('/api/vocabulary/chapters/:chapterNumber', (req, res) => {
   const chapterNumber = parseInt(req.params.chapterNumber, 10);
   
   try {
@@ -192,8 +97,10 @@ handleBothPaths('/api/vocabulary/chapters/:chapterNumber', (req, res) => {
   }
 });
 
+
+
 // Get next question for practice
-handleBothPaths('/api/practice/next-question', (req, res) => {
+app.get('/api/practice/next-question', (req, res) => {
   const { chapter, mode, questionFormat } = req.query;
   const vocabularyData = readJsonFile(VOCABULARY_FILE);
   
@@ -281,6 +188,7 @@ handleBothPaths('/api/practice/next-question', (req, res) => {
         .slice(0, 3)
         .map(word => word.english);
       
+      // Ask for the English translation of a Latin word
       question = {
         format: 'multiple-choice',
         type: direction,
@@ -293,10 +201,15 @@ handleBothPaths('/api/practice/next-question', (req, res) => {
       };
     } else {
       // Ask for the Latin translation of an English word
+      // Get Latin distractors
       distractors = distractors
         .sort(() => 0.5 - Math.random())
         .slice(0, 3)
-        .map(word => word.latin);
+        .map(() => {
+          // Get random Latin words as distractors
+          const randomDistractor = wordsPool[Math.floor(Math.random() * wordsPool.length)];
+          return randomDistractor.latin;
+        });
       
       question = {
         format: 'multiple-choice',
@@ -316,6 +229,7 @@ handleBothPaths('/api/practice/next-question', (req, res) => {
       const fullSentence = randomWord.englishSentence;
       const wordToReplace = randomWord.english;
       
+      // Replace the word with a blank (handle multiple forms of the word by checking if it contains the word)
       const clozePattern = new RegExp(`\\b${wordToReplace}\\b`, 'i');
       const clozeSentence = fullSentence.replace(clozePattern, '___________');
       
@@ -334,6 +248,7 @@ handleBothPaths('/api/practice/next-question', (req, res) => {
       const fullSentence = randomWord.latinSentence;
       const wordToReplace = randomWord.latin;
       
+      // Replace the word with a blank
       const clozePattern = new RegExp(`\\b${wordToReplace}\\b`, 'i');
       const clozeSentence = fullSentence.replace(clozePattern, '___________');
       
@@ -354,7 +269,7 @@ handleBothPaths('/api/practice/next-question', (req, res) => {
 });
 
 // Submit an answer
-handleBothPathsPost('/api/practice/submit-answer', (req, res) => {
+app.post('/api/practice/submit-answer', (req, res) => {
   const { username, latinWord, userAnswer, format } = req.body;
   
   if (!username || !latinWord || !userAnswer) {
@@ -395,6 +310,7 @@ handleBothPathsPost('/api/practice/submit-answer', (req, res) => {
   let isCorrect = false;
   
   if (format === 'fill-in-the-blank') {
+    // For fill-in-the-blank, do a more flexible check (case-insensitive and ignore extra spaces)
     const normalizedUserAnswer = userAnswer.trim().toLowerCase();
     const normalizedCorrectEnglish = correctWord.english.trim().toLowerCase();
     const normalizedCorrectLatin = correctWord.latin.trim().toLowerCase();
@@ -404,6 +320,7 @@ handleBothPathsPost('/api/practice/submit-answer', (req, res) => {
       normalizedUserAnswer === normalizedCorrectLatin
     );
   } else {
+    // For multiple choice, check exact match
     isCorrect = (
       userAnswer === correctWord.english || 
       userAnswer === correctWord.latin
@@ -426,9 +343,10 @@ handleBothPathsPost('/api/practice/submit-answer', (req, res) => {
   
   // Save updated user data
   if (!writeJsonFile(USERS_FILE, usersData)) {
-    console.warn('Failed to update user progress (expected in production)');
+    return res.status(500).json({ error: 'Failed to update user progress' });
   }
   
+  // Return feedback
   res.json({
     correct: isCorrect,
     correctAnswer: correctWord.english,
@@ -440,7 +358,7 @@ handleBothPathsPost('/api/practice/submit-answer', (req, res) => {
 });
 
 // Get user progress
-handleBothPaths('/api/users/:username/progress', (req, res) => {
+app.get('/api/users/:username/progress', (req, res) => {
   const { username } = req.params;
   
   const usersData = readJsonFile(USERS_FILE);
@@ -462,7 +380,7 @@ handleBothPaths('/api/users/:username/progress', (req, res) => {
 });
 
 // User login (simplified, no real auth)
-handleBothPathsPost('/api/users/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
   const { username } = req.body;
   
   if (!username) {
@@ -475,12 +393,14 @@ handleBothPathsPost('/api/users/login', (req, res) => {
     return res.status(500).json({ error: 'Failed to read user data' });
   }
   
+  // Check if user exists
   let user = usersData.users.find(u => u.username === username);
   
+  // If user doesn't exist, create a new one
   if (!user) {
     user = {
       username,
-      passwordHash: "tempHash",
+      passwordHash: "tempHash", // In a real app, you'd hash a password
       chapterProgress: 1,
       vocabProgress: {}
     };
@@ -488,7 +408,7 @@ handleBothPathsPost('/api/users/login', (req, res) => {
     usersData.users.push(user);
     
     if (!writeJsonFile(USERS_FILE, usersData)) {
-      console.warn('Failed to create user (expected in production)');
+      return res.status(500).json({ error: 'Failed to create user' });
     }
   }
   
@@ -498,29 +418,9 @@ handleBothPathsPost('/api/users/login', (req, res) => {
   });
 });
 
-// ===========================
-// Added test endpoints
-app.get('/Latin-Vocab-Shadcn/api/test', (req, res) => {
-  res.json({ message: 'API is working!', timestamp: new Date().toISOString() });
-});
-
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'API is working!', timestamp: new Date().toISOString() });
-});
-// ===========================
-
-// Catch-all route to serve index.html for any other routes (important for single-page apps)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   console.log(`Vocabulary file: ${VOCABULARY_FILE}`);
   console.log(`Users file: ${USERS_FILE}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
-
-// Export the Express API for Vercel
-module.exports = app;
