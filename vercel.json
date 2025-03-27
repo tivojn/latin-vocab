@@ -16,8 +16,11 @@
       "dest": "server.js"
     },
     {
-      "src": "/Latin-Vocab-Shadcn",
-      "dest": "/public/index.html"
+      "src": "/Latin-Vocab-Shadcn/?",
+      "status": 308,
+      "headers": {
+        "Location": "/Latin-Vocab-Shadcn/public/index.html"
+      }
     },
     {
       "src": "/Latin-Vocab-Shadcn/(.*)",
