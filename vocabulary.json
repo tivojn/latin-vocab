@@ -1,0 +1,136 @@
+{
+  "chapters": [
+    {
+      "chapterNumber": 1,
+      "chapterTitle": "House and Family",
+      "words": [
+        {
+          "latin": "canis",
+          "english": "dog",
+          "latinSentence": "Canis in hortō dormit.",
+          "englishSentence": "The dog is sleeping in the garden."
+        },
+        {
+          "latin": "coquus",
+          "english": "cook",
+          "latinSentence": "Coquus cibum parat.",
+          "englishSentence": "The cook is preparing the food."
+        },
+        {
+          "latin": "domus",
+          "english": "house, home",
+          "latinSentence": "Domus nostra magna est.",
+          "englishSentence": "Our house is large."
+        },
+        {
+          "latin": "familia",
+          "english": "family",
+          "latinSentence": "Familia mea in domō habitat.",
+          "englishSentence": "My family lives in the house."
+        },
+        {
+          "latin": "pater",
+          "english": "father",
+          "latinSentence": "Pater meus agricola est.",
+          "englishSentence": "My father is a farmer."
+        },
+        {
+          "latin": "mater",
+          "english": "mother",
+          "latinSentence": "Mater mea cibum parat.",
+          "englishSentence": "My mother prepares the food."
+        },
+        {
+          "latin": "filius",
+          "english": "son",
+          "latinSentence": "Filius meus litterās discit.",
+          "englishSentence": "My son learns his letters."
+        },
+        {
+          "latin": "filia",
+          "english": "daughter",
+          "latinSentence": "Filia mea aquam portat.",
+          "englishSentence": "My daughter carries water."
+        }
+      ]
+    },
+    {
+      "chapterNumber": 2,
+      "chapterTitle": "Daily Life and Objects",
+      "words": [
+        {
+          "latin": "mensa",
+          "english": "table",
+          "latinSentence": "Servus mensam parat.",
+          "englishSentence": "The slave is setting the table."
+        },
+        {
+          "latin": "via",
+          "english": "road, way",
+          "latinSentence": "Via ad urbem ducit.",
+          "englishSentence": "The road leads to the city."
+        },
+        {
+          "latin": "liber",
+          "english": "book",
+          "latinSentence": "Puer librum legit.",
+          "englishSentence": "The boy reads the book."
+        },
+        {
+          "latin": "aqua",
+          "english": "water",
+          "latinSentence": "Servus aquam portat.",
+          "englishSentence": "The slave carries water."
+        },
+        {
+          "latin": "cibus",
+          "english": "food",
+          "latinSentence": "Cibus in mensa est.",
+          "englishSentence": "The food is on the table."
+        },
+        {
+          "latin": "lectus",
+          "english": "bed",
+          "latinSentence": "Puer in lectō dormit.",
+          "englishSentence": "The boy sleeps in the bed."
+        }
+      ]
+    },
+    {
+      "chapterNumber": 3,
+      "chapterTitle": "Cities and Places",
+      "words": [
+        {
+          "latin": "urbs",
+          "english": "city",
+          "latinSentence": "Urbs magna et pulchra est.",
+          "englishSentence": "The city is large and beautiful."
+        },
+        {
+          "latin": "forum",
+          "english": "forum, marketplace",
+          "latinSentence": "Multī hominēs in forō sunt.",
+          "englishSentence": "Many people are in the forum."
+        },
+        {
+          "latin": "templum",
+          "english": "temple",
+          "latinSentence": "Sacerdōs in templō sacrificat.",
+          "englishSentence": "The priest sacrifices in the temple."
+        },
+        {
+          "latin": "villa",
+          "english": "country house, villa",
+          "latinSentence": "Villa in agrīs sita est.",
+          "englishSentence": "The villa is situated in the fields."
+        },
+        {
+          "latin": "taberna",
+          "english": "shop, tavern",
+          "latinSentence": "Mercātor in tabernā labōrat.",
+          "englishSentence": "The merchant works in the shop."
+        }
+      ]
+    }
+  ]
+}

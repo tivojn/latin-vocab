@@ -1,0 +1,128 @@
+{
+  "users": [
+    {
+      "username": "marcus",
+      "passwordHash": "exampleHash123",
+      "chapterProgress": 2,
+      "vocabProgress": {
+        "canis": {
+          "correctCount": 5,
+          "incorrectCount": 1
+        },
+        "coquus": {
+          "correctCount": 3,
+          "incorrectCount": 2
+        },
+        "domus": {
+          "correctCount": 4,
+          "incorrectCount": 0
+        },
+        "familia": {
+          "correctCount": 2,
+          "incorrectCount": 1
+        },
+        "pater": {
+          "correctCount": 3,
+          "incorrectCount": 0
+        },
+        "mater": {
+          "correctCount": 3,
+          "incorrectCount": 0
+        },
+        "filius": {
+          "correctCount": 1,
+          "incorrectCount": 2
+        },
+        "filia": {
+          "correctCount": 1,
+          "incorrectCount": 2
+        },
+        "mensa": {
+          "correctCount": 2,
+          "incorrectCount": 3
+        },
+        "via": {
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      }
+    },
+    {
+      "username": "julia",
+      "passwordHash": "anotherHash456",
+      "chapterProgress": 1,
+      "vocabProgress": {
+        "canis": {
+          "correctCount": 2,
+          "incorrectCount": 0
+        },
+        "coquus": {
+          "correctCount": 1,
+          "incorrectCount": 1
+        },
+        "domus": {
+          "correctCount": 3,
+          "incorrectCount": 0
+        },
+        "familia": {
+          "correctCount": 1,
+          "incorrectCount": 0
+        }
+      }
+    },
+    {
+      "username": "gary",
+      "passwordHash": "tempHash",
+      "chapterProgress": 1,
+      "vocabProgress": {
+        "coquus": {
+          "correctCount": 5,
+          "incorrectCount": 2
+        },
+        "canis": {
+          "correctCount": 3,
+          "incorrectCount": 0
+        },
+        "familia": {
+          "correctCount": 1,
+          "incorrectCount": 0
+        },
+        "filius": {
+          "correctCount": 1,
+          "incorrectCount": 0
+        },
+        "pater": {
+          "correctCount": 1,
+          "incorrectCount": 0
+        },
+        "domus": {
+          "correctCount": 2,
+          "incorrectCount": 1
+        }
+      }
+    },
+    {
+      "username": "tt",
+      "passwordHash": "tempHash",
+      "chapterProgress": 1,
+      "vocabProgress": {
+        "coquus": {
+          "correctCount": 0,
+          "incorrectCount": 1
+        }
+      }
+    },
+    {
+      "username": "gg",
+      "passwordHash": "tempHash",
+      "chapterProgress": 1,
+      "vocabProgress": {}
+    },
+    {
+      "username": "hh",
+      "passwordHash": "tempHash",
+      "chapterProgress": 1,
+      "vocabProgress": {}
+    }
+  ]
+}

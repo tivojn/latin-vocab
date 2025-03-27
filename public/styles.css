@@ -1,0 +1,175 @@
+/* Custom styles beyond Tailwind */
+
+/* Transitions */
+.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Chapter item styling */
+.chapter-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #f3f4f6;
+  color: #374151;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+.chapter-item:hover {
+  background-color: #e5e7eb;
+}
+
+.chapter-item.selected {
+  background-color: #ddd6fe;
+  color: #5b21b6;
+  font-weight: 500;
+}
+
+/* Format toggle styling */
+.format-toggle {
+  transition: all 150ms ease-in-out;
+}
+
+.format-toggle.active {
+  background-color: #ddd6fe;
+  color: #5b21b6;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Option button styling */
+.option-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #f3f4f6;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+.option-btn:hover {
+  background-color: #e5e7eb;
+}
+
+.option-btn.selected {
+  background-color: #ddd6fe;
+  color: #5b21b6;
+  font-weight: 500;
+}
+
+.option-btn.correct {
+  background-color: #d1fae5;
+  color: #047857;
+  font-weight: 500;
+}
+
+.option-btn.incorrect {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  font-weight: 500;
+}
+
+/* Feedback styling */
+.feedback {
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.feedback.correct {
+  background-color: #d1fae5;
+  color: #047857;
+  border-left: 4px solid #10b981;
+}
+
+.feedback.incorrect {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-left: 4px solid #ef4444;
+}
+
+/* Input styling */
+.text-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  color: #374151;
+  transition: all 150ms ease-in-out;
+  background-color: #f9fafb;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 0.375rem;
+  background-color: #8b5cf6;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #7c3aed;
+}
+
+/* Cloze sentence styling */
+.cloze-sentence {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  padding: 1rem;
+  background-color: #f3f4f6;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Animation for loading states */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Disabled state */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:disabled,
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

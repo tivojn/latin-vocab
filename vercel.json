@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/Latin-Vocab-Shadcn/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/Latin-Vocab-Shadcn",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/Latin-Vocab-Shadcn/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}
