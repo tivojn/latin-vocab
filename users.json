@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "username": "demo",
+      "passwordHash": "tempHash",
+      "chapterProgress": 1,
+      "vocabProgress": {
+        "canis": {
+          "correctCount": 3,
+          "incorrectCount": 1
+        },
+        "servus": {
+          "correctCount": 2,
+          "incorrectCount": 0
+        },
+        "via": {
+          "correctCount": 4,
+          "incorrectCount": 0
+        },
+        "amīcus": {
+          "correctCount": 3,
+          "incorrectCount": 2
+        },
+        "cibus": {
+          "correctCount": 1,
+          "incorrectCount": 2
+        }
+      }
+    }
+  ]
+}

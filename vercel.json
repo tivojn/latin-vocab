@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/vocabulary/chapters/(?<chapterNumber>[^/]+)",
+      "dest": "/api/vocabulary/chapters/[chapterNumber].js?chapterNumber=$chapterNumber"
+    },
+    {
+      "src": "/api/users/(?<username>[^/]+)/progress",
+      "dest": "/api/users/[username]/progress.js?username=$username"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}

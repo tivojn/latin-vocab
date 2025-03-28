@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin Vocabulary - Debug Logs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    .log-entry {
+      margin-bottom: 1rem;
+    }
+    .log-timestamp {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .log-error {
+      border-left: 4px solid #ef4444;
+    }
+    .log-warning {
+      border-left: 4px solid #f59e0b;
+    }
+    .log-info {
+      border-left: 4px solid #3b82f6;
+    }
+    .log-success {
+      border-left: 4px solid #10b981;
+    }
+    pre {
+      overflow-x: auto;
+      padding: 0.5rem;
+      background-color: #f3f4f6;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto p-4 max-w-5xl">
+    <header class="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-xl font-bold text-gray-800">
+          <span class="text-purple-600">Latin Vocabulary</span> - Debug Logs
+        </h1>
+        <div>
+          <button id="clear-logs-btn" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+            Clear Logs
+          </button>
+          <a href="index.html" class="ml-2 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition">
+            Back to App
+          </a>
+        </div>
+      </div>
+    </header>
+    
+    <main class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold text-gray-800">Application Logs</h2>
+        <div>
+          <label class="inline-flex items-center mr-4">
+            <input type="checkbox" id="show-error" class="form-checkbox h-5 w-5 text-red-500" checked>
+            <span class="ml-2 text-gray-700">Errors</span>
+          </label>
+          <label class="inline-flex items-center mr-4">
+            <input type="checkbox" id="show-warning" class="form-checkbox h-5 w-5 text-yellow-500" checked>
+            <span class="ml-2 text-gray-700">Warnings</span>
+          </label>
+          <label class="inline-flex items-center mr-4">
+            <input type="checkbox" id="show-info" class="form-checkbox h-5 w-5 text-blue-500" checked>
+            <span class="ml-2 text-gray-700">Info</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="checkbox" id="show-success" class="form-checkbox h-5 w-5 text-green-500" checked>
+            <span class="ml-2 text-gray-700">Success</span>
+          </label>
+        </div>
+      </div>
+      
+      <div id="logs-container" class="space-y-4">
+        <!-- Logs will be dynamically added here -->
+        <div class="text-gray-500 text-center py-8">Loading logs...</div>
+      </div>
+    </main>
+  </div>
+  
+  <script>
+    // DOM Elements
+    const logsContainer = document.getElementById('logs-container');
+    const clearLogsBtn = document.getElementById('clear-logs-btn');
+    const showErrorCheckbox = document.getElementById('show-error');
+    const showWarningCheckbox = document.getElementById('show-warning');
+    const showInfoCheckbox = document.getElementById('show-info');
+    const showSuccessCheckbox = document.getElementById('show-success');
+    
+    // Load and display logs
+    function loadLogs() {
+      const logs = JSON.parse(localStorage.getItem('latinVocabDebugLog') || '[]');
+      
+      // Clear the container
+      logsContainer.innerHTML = '';
+      
+      if (logs.length === 0) {
+        logsContainer.innerHTML = '<div class="text-gray-500 text-center py-8">No logs available.</div>';
+        return;
+      }
+      
+      // Render logs in reverse order (newest first)
+      logs.slice().reverse().forEach(log => {
+        // Skip if the log type is filtered out
+        if (
+          (log.type === 'error' && !showErrorCheckbox.checked) ||
+          (log.type === 'warning' && !showWarningCheckbox.checked) ||
+          (log.type === 'info' && !showInfoCheckbox.checked) ||
+          (log.type === 'success' && !showSuccessCheckbox.checked)
+        ) {
+          return;
+        }
+        
+        // Create log entry
+        const logEntry = document.createElement('div');
+        logEntry.classList.add('log-entry', 'pl-4', `log-${log.type}`);
+        
+        // Add header
+        const header = document.createElement('div');
+        header.classList.add('flex', 'justify-between', 'items-start', 'mb-1');
+        
+        const title = document.createElement('div');
+        title.classList.add('font-medium');
+        title.innerHTML = `[${log.type.toUpperCase()}] <span class="text-gray-700">${log.action}</span>`;
+        
+        const timestamp = document.createElement('div');
+        timestamp.classList.add('log-timestamp');
+        timestamp.textContent = new Date(log.timestamp).toLocaleString();
+        
+        header.appendChild(title);
+        header.appendChild(timestamp);
+        logEntry.appendChild(header);
+        
+        // Add message
+        const message = document.createElement('div');
+        message.classList.add('text-gray-600', 'mb-1');
+        message.textContent = log.message;
+        logEntry.appendChild(message);
+        
+        // Add data if available
+        if (log.data) {
+          const data = document.createElement('pre');
+          data.textContent = JSON.stringify(log.data, null, 2);
+          logEntry.appendChild(data);
+        }
+        
+        // Add to container
+        logsContainer.appendChild(logEntry);
+      });
+    }
+    
+    // Event listeners
+    clearLogsBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all logs?')) {
+        localStorage.setItem('latinVocabDebugLog', '[]');
+        loadLogs();
+      }
+    });
+    
+    showErrorCheckbox.addEventListener('change', loadLogs);
+    showWarningCheckbox.addEventListener('change', loadLogs);
+    showInfoCheckbox.addEventListener('change', loadLogs);
+    showSuccessCheckbox.addEventListener('change', loadLogs);
+    
+    // Initial load
+    loadLogs();
+  </script>
+</body>
+</html>
