@@ -80,7 +80,7 @@
           "incorrectCount": 2
         },
         "canis": {
-          "correctCount": 7,
+          "correctCount": 8,
           "incorrectCount": 0
         },
         "familia": {
@@ -154,6 +154,10 @@
         "urbs": {
           "correctCount": 0,
           "incorrectCount": 1
+        },
+        "amīcus": {
+          "correctCount": 2,
+          "incorrectCount": 3
         }
       }
     },
