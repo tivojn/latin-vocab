@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin Vocab Debug Log</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    .log-entry {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px 0;
+    }
+    .log-entry.error {
+      background-color: #fee2e2;
+    }
+    .log-entry.warning {
+      background-color: #fef3c7;
+    }
+    .log-entry.info {
+      background-color: #e0f2fe;
+    }
+    .log-entry.success {
+      background-color: #d1fae5;
+    }
+    #log-container {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .timestamp {
+      color: #6b7280;
+      font-size: 0.8rem;
+    }
+    .log-type {
+      font-weight: bold;
+    }
+    .error .log-type {
+      color: #b91c1c;
+    }
+    .warning .log-type {
+      color: #b45309;
+    }
+    .info .log-type {
+      color: #1d4ed8;
+    }
+    .success .log-type {
+      color: #047857;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto p-4 max-w-5xl">
+    <header class="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800">
+          <span class="text-purple-600">Latin</span> Vocabulary Debug Log
+        </h1>
+        <div class="flex space-x-2">
+          <button id="clear-log-btn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+            Clear Log
+          </button>
+          <a href="index.html" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">
+            Back to App
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- API Test Section -->
+    <section class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">API Test Tools</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Test Next Question API -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <h3 class="font-medium text-lg mb-2">Test Get Question API</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-sm font-medium mb-1">Book:</label>
+              <select id="test-book" class="w-full p-2 border rounded">
+                <option value="bk1">Book 1</option>
+                <option value="bk2">Book 2</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Chapter:</label>
+              <input type="number" id="test-chapter" class="w-full p-2 border rounded" value="1" min="1" max="20">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Format:</label>
+              <select id="test-format" class="w-full p-2 border rounded">
+                <option value="multiple-choice">Multiple Choice</option>
+                <option value="fill-in-the-blank">Fill in Blank</option>
+              </select>
+            </div>
+            <button id="test-question-btn" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+              Test Question API
+            </button>
+          </div>
+        </div>
+
+        <!-- Test Submit Answer API -->
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <h3 class="font-medium text-lg mb-2">Test Submit Answer API</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-sm font-medium mb-1">Username:</label>
+              <input type="text" id="test-username" class="w-full p-2 border rounded" value="testuser">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Latin Word:</label>
+              <input type="text" id="test-latinword" class="w-full p-2 border rounded" value="canis">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Answer:</label>
+              <input type="text" id="test-answer" class="w-full p-2 border rounded" value="dog">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Format:</label>
+              <select id="test-answer-format" class="w-full p-2 border rounded">
+                <option value="multiple-choice">Multiple Choice</option>
+                <option value="fill-in-the-blank">Fill in Blank</option>
+              </select>
+            </div>
+            <button id="test-submit-btn" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+              Test Submit Answer API
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-gray-800">Application Logs</h2>
+        <div>
+          <label class="inline-flex items-center mr-4">
+            <input type="checkbox" id="auto-scroll" class="form-checkbox" checked>
+            <span class="ml-2">Auto-scroll</span>
+          </label>
+          <button id="refresh-btn" class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition">
+            Refresh
+          </button>
+        </div>
+      </div>
+      
+      <div id="log-container" class="rounded-lg border border-gray-200 p-4 bg-gray-50">
+        <div id="log-entries">
+          <!-- Log entries will be displayed here -->
+          <div class="log-entry info">
+            <span class="timestamp">Loading logs...</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Initialize debug storage if not exists
+    if (!localStorage.getItem('latinVocabDebugLog')) {
+      localStorage.setItem('latinVocabDebugLog', JSON.stringify([]));
+    }
+
+    // Debug Logging function (duplicate from app.js)
+    const debugLog = {
+      addLog(type, action, message, data) {
+        try {
+          // Get current logs
+          const logs = JSON.parse(localStorage.getItem('latinVocabDebugLog') || '[]');
+          
+          // Add new log entry
+          logs.push({
+            timestamp: new Date().toISOString(),
+            type, // 'error', 'warning', 'info', 'success'
+            action,
+            message,
+            data
+          });
+          
+          // Keep only the last 100 logs
+          if (logs.length > 100) {
+            logs.splice(0, logs.length - 100);
+          }
+          
+          // Save logs
+          localStorage.setItem('latinVocabDebugLog', JSON.stringify(logs));
+        } catch (e) {
+          console.error('Error logging to debug system:', e);
+        }
+      },
+      
+      error(action, message, data) {
+        console.error(`ERROR [${action}]:`, message, data);
+        this.addLog('error', action, message, data);
+      },
+      
+      warning(action, message, data) {
+        console.warn(`WARNING [${action}]:`, message, data);
+        this.addLog('warning', action, message, data);
+      },
+      
+      info(action, message, data) {
+        console.log(`INFO [${action}]:`, message, data);
+        this.addLog('info', action, message, data);
+      },
+      
+      success(action, message, data) {
+        console.log(`SUCCESS [${action}]:`, message, data);
+        this.addLog('success', action, message, data);
+      }
+    };
+
+    // DOM Elements
+    const logContainer = document.getElementById('log-entries');
+    const clearLogBtn = document.getElementById('clear-log-btn');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const autoScrollCheckbox = document.getElementById('auto-scroll');
+    const testQuestionBtn = document.getElementById('test-question-btn');
+    const testSubmitBtn = document.getElementById('test-submit-btn');
+
+    // Test Next Question API
+    testQuestionBtn.addEventListener('click', async () => {
+      const book = document.getElementById('test-book').value;
+      const chapter = document.getElementById('test-chapter').value;
+      const format = document.getElementById('test-format').value;
+      
+      debugLog.info('debugTool', 'Testing Get Question API', { book, chapter, format });
+      
+      try {
+        const queryParams = `?questionFormat=${format}&book=${book}&chapter=${chapter}`;
+        const response = await fetch(`/api/practice/next-question${queryParams}`);
+        
+        // Get response text
+        const responseText = await response.text();
+        let responseData;
+        
+        try {
+          responseData = JSON.parse(responseText);
+        } catch (e) {
+          responseData = { text: responseText };
+        }
+        
+        if (!response.ok) {
+          debugLog.error('debugTool', 'Question API test failed', {
+            status: response.status,
+            statusText: response.statusText,
+            response: responseData
+          });
+        } else {
+          debugLog.success('debugTool', 'Question API test successful', responseData);
+        }
+      } catch (error) {
+        debugLog.error('debugTool', 'Error testing Question API', {
+          message: error.message,
+          stack: error.stack
+        });
+      }
+      
+      // Refresh logs
+      loadLogs();
+    });
+
+    // Test Submit Answer API
+    testSubmitBtn.addEventListener('click', async () => {
+      const username = document.getElementById('test-username').value;
+      const latinWord = document.getElementById('test-latinword').value;
+      const userAnswer = document.getElementById('test-answer').value;
+      const format = document.getElementById('test-answer-format').value;
+      const book = document.getElementById('test-book').value;
+      
+      const requestData = { username, latinWord, userAnswer, format, book };
+      
+      debugLog.info('debugTool', 'Testing Submit Answer API', requestData);
+      
+      try {
+        const response = await fetch('/api/practice/submit-answer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        });
+        
+        // Get response text
+        const responseText = await response.text();
+        let responseData;
+        
+        try {
+          responseData = JSON.parse(responseText);
+        } catch (e) {
+          responseData = { text: responseText };
+        }
+        
+        if (!response.ok) {
+          debugLog.error('debugTool', 'Submit Answer API test failed', {
+            status: response.status,
+            statusText: response.statusText,
+            response: responseData
+          });
+        } else {
+          debugLog.success('debugTool', 'Submit Answer API test successful', responseData);
+        }
+      } catch (error) {
+        debugLog.error('debugTool', 'Error testing Submit Answer API', {
+          message: error.message,
+          stack: error.stack
+        });
+      }
+      
+      // Refresh logs
+      loadLogs();
+    });
+
+    // Load logs from storage
+    function loadLogs() {
+      const logs = JSON.parse(localStorage.getItem('latinVocabDebugLog') || '[]');
+      logContainer.innerHTML = '';
+      
+      if (logs.length === 0) {
+        logContainer.innerHTML = '<div class="log-entry info"><span class="timestamp">No logs available</span></div>';
+        return;
+      }
+
+      logs.forEach(log => {
+        const logEntryDiv = document.createElement('div');
+        logEntryDiv.classList.add('log-entry', log.type);
+        
+        const timestamp = new Date(log.timestamp).toLocaleString();
+        
+        logEntryDiv.innerHTML = `
+          <div class="flex items-start">
+            <span class="timestamp mr-2">[${timestamp}]</span>
+            <span class="log-type mr-2">${log.type.toUpperCase()}:</span>
+            <div class="flex-1">
+              <div><strong>${log.action || 'General'}</strong></div>
+              <div class="whitespace-pre-wrap">${log.message}</div>
+              ${log.data ? `<pre class="mt-2 bg-gray-800 text-gray-100 p-2 rounded text-sm overflow-x-auto">${JSON.stringify(log.data, null, 2)}</pre>` : ''}
+            </div>
+          </div>
+        `;
+        
+        logContainer.appendChild(logEntryDiv);
+      });
+      
+      // Auto-scroll to the bottom
+      if (autoScrollCheckbox.checked) {
+        logContainer.parentElement.scrollTop = logContainer.parentElement.scrollHeight;
+      }
+    }
+
+    // Event Listeners
+    clearLogBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all logs?')) {
+        localStorage.setItem('latinVocabDebugLog', JSON.stringify([]));
+        loadLogs();
+      }
+    });
+
+    refreshBtn.addEventListener('click', loadLogs);
+
+    // Initial load
+    loadLogs();
+
+    // Auto refresh every 3 seconds
+    setInterval(loadLogs, 3000);
+  </script>
+</body>
+</html>

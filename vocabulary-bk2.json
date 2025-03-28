@@ -1,238 +1,1205 @@
 {
-  "chapters": [
-    {
-      "chapterNumber": 13,
-      "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 13",
-      "words": [
-        {
-          "latin": "aedificium",
-          "english": "building",
-          "latinSentence": "Aedificium novum in centro urbis surgit.",
-          "englishSentence": "A new building rises in the center of the city."
-        },
-        {
-          "latin": "annus",
-          "english": "year",
-          "latinSentence": "Annus novus felicitatem adfert.",
-          "englishSentence": "The new year brings happiness."
-        },
-        {
-          "latin": "aqua",
-          "english": "water",
-          "latinSentence": "Aqua frigida in fonte fluebat.",
-          "englishSentence": "Cool water was flowing in the fountain."
-        },
-        {
-          "latin": "bonus",
-          "english": "good",
-          "latinSentence": "Magister bonus discipulos amabat.",
-          "englishSentence": "The good teacher loved his students."
-        },
-        {
-          "latin": "deus",
-          "english": "god",
-          "latinSentence": "Romani multos deos adorabant.",
-          "englishSentence": "The Romans worshipped many gods."
-        },
-        {
-          "latin": "faber",
-          "english": "craftsman",
-          "latinSentence": "Faber lignum in officina sculpit.",
-          "englishSentence": "The craftsman carves wood in the workshop."
-        },
-        {
-          "latin": "insula",
-          "english": "apartment building, island",
-          "latinSentence": "Pauper in insula habitabat.",
-          "englishSentence": "The poor man lived in an apartment building."
-        },
-        {
-          "latin": "magnus",
-          "english": "big, large, great",
-          "latinSentence": "Templum magnum in colle stabat.",
-          "englishSentence": "A great temple stood on the hill."
-        },
-        {
-          "latin": "nauta",
-          "english": "sailor",
-          "latinSentence": "Nauta mare bene cognoscit.",
-          "englishSentence": "The sailor knows the sea well."
-        },
-        {
-          "latin": "novus",
-          "english": "new",
-          "latinSentence": "Puer novum librum legit.",
-          "englishSentence": "The boy reads a new book."
-        },
-        {
-          "latin": "pons",
-          "english": "bridge",
-          "latinSentence": "Pons flumen transiebat.",
-          "englishSentence": "The bridge crossed the river."
-        },
-        {
-          "latin": "templum",
-          "english": "temple",
-          "latinSentence": "Sacerdos ad templum ambulabat.",
-          "englishSentence": "The priest was walking to the temple."
-        }
-      ]
-    },
-    {
-      "chapterNumber": 14,
-      "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 14",
-      "words": [
-        {
-          "latin": "alii...alii",
-          "english": "some...others",
-          "latinSentence": "Alii cantabant, alii saltabant.",
-          "englishSentence": "Some were singing, others were dancing."
-        },
-        {
-          "latin": "amor",
-          "english": "love",
-          "latinSentence": "Amor inter virum et feminam crescebat.",
-          "englishSentence": "Love was growing between the man and woman."
-        },
-        {
-          "latin": "bellum",
-          "english": "war",
-          "latinSentence": "Bellum multos annos durabat.",
-          "englishSentence": "The war lasted many years."
-        },
-        {
-          "latin": "deinde",
-          "english": "then, next",
-          "latinSentence": "Primo bibebant, deinde cantabant.",
-          "englishSentence": "First they were drinking, then they were singing."
-        },
-        {
-          "latin": "facilis",
-          "english": "easy",
-          "latinSentence": "Quaestio facilis erat.",
-          "englishSentence": "The question was easy."
-        },
-        {
-          "latin": "gloria",
-          "english": "glory",
-          "latinSentence": "Gloria imperatoris magna erat.",
-          "englishSentence": "The glory of the emperor was great."
-        },
-        {
-          "latin": "liber",
-          "english": "free",
-          "latinSentence": "Homo liber in foro ambulabat.",
-          "englishSentence": "The free man was walking in the forum."
-        },
-        {
-          "latin": "longus",
-          "english": "long",
-          "latinSentence": "Via longa ad urbem ducebat.",
-          "englishSentence": "The long road led to the city."
-        },
-        {
-          "latin": "mortuus",
-          "english": "dead",
-          "latinSentence": "Corpus mortuus in templo iacebat.",
-          "englishSentence": "The dead body was lying in the temple."
-        },
-        {
-          "latin": "omnis",
-          "english": "all, every",
-          "latinSentence": "Omnes cives in forum conveniebant.",
-          "englishSentence": "All citizens were gathering in the forum."
-        },
-        {
-          "latin": "pax",
-          "english": "peace",
-          "latinSentence": "Pax post bellum advenit.",
-          "englishSentence": "Peace came after the war."
-        },
-        {
-          "latin": "superbus",
-          "english": "proud, arrogant",
-          "latinSentence": "Vir superbus gloriam petebat.",
-          "englishSentence": "The proud man was seeking glory."
-        }
-      ]
-    },
-    {
-      "chapterNumber": 15,
-      "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 15",
-      "words": [
-        {
-          "latin": "aeger",
-          "english": "sick, ill",
-          "latinSentence": "Puer aeger in lecto iacebat.",
-          "englishSentence": "The sick boy was lying in bed."
-        },
-        {
-          "latin": "autem",
-          "english": "however, but",
-          "latinSentence": "Marcus currere voluit, autem fessus erat.",
-          "englishSentence": "Marcus wanted to run, however he was tired."
-        },
-        {
-          "latin": "dies",
-          "english": "day",
-          "latinSentence": "Dies hodie calidus est.",
-          "englishSentence": "The day today is warm."
-        },
-        {
-          "latin": "difficilis",
-          "english": "difficult",
-          "latinSentence": "Iter difficilis per montes erat.",
-          "englishSentence": "The journey through the mountains was difficult."
-        },
-        {
-          "latin": "eques",
-          "english": "horseman, knight",
-          "latinSentence": "Eques per viam celeriter equitabat.",
-          "englishSentence": "The horseman was riding quickly along the road."
-        },
-        {
-          "latin": "fessus",
-          "english": "tired",
-          "latinSentence": "Servus fessus post laborem quiescebat.",
-          "englishSentence": "The tired slave was resting after work."
-        },
-        {
-          "latin": "iam",
-          "english": "now, already",
-          "latinSentence": "Iam tempus est dormire.",
-          "englishSentence": "Now it is time to sleep."
-        },
-        {
-          "latin": "ille",
-          "english": "that, he",
-          "latinSentence": "Ille homo sapiens erat.",
-          "englishSentence": "That man was wise."
-        },
-        {
-          "latin": "iuvenis",
-          "english": "young",
-          "latinSentence": "Puella iuvenis in horto ludebat.",
-          "englishSentence": "The young girl was playing in the garden."
-        },
-        {
-          "latin": "manus",
-          "english": "hand",
-          "latinSentence": "Manus puer librum tenebat.",
-          "englishSentence": "The boy's hand was holding the book."
-        },
-        {
-          "latin": "sapientia",
-          "english": "wisdom",
-          "latinSentence": "Sapientia senis magna erat.",
-          "englishSentence": "The wisdom of the old man was great."
-        },
-        {
-          "latin": "verbum",
-          "english": "word",
-          "latinSentence": "Verbum novum discipuli discebant.",
-          "englishSentence": "The students were learning a new word."
-        }
-      ]
-    }
-  ]
-}
+    "chapters": [
+      {
+        "chapterNumber": 13,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 13",
+        "words": [
+          {
+            "latin": "adveniō",
+            "english": "arrive",
+            "latinSentence": "Marcus advenit ad scholam mane.",
+            "englishSentence": "Marcus arrives at school in the morning."
+          },
+          {
+            "latin": "aedificium",
+            "english": "building",
+            "latinSentence": "In urbe novum aedificium magnum stat.",
+            "englishSentence": "In the city, a new large building stands."
+          },
+          {
+            "latin": "aeger",
+            "english": "sick, ill",
+            "latinSentence": "Puella aeger domi manet propter febrem.",
+            "englishSentence": "The girl stays at home because she is sick."
+          },
+          {
+            "latin": "alter",
+            "english": "the other, the second",
+            "latinSentence": "Duo discipuli sunt; alter in classe sedet.",
+            "englishSentence": "There are two students; the other sits in the classroom."
+          },
+          {
+            "latin": "cantō",
+            "english": "sing",
+            "latinSentence": "Magistra cantat carmen laetum in aula.",
+            "englishSentence": "The teacher sings a joyful song in the hall."
+          },
+          {
+            "latin": "cēterī",
+            "english": "the others, the rest",
+            "latinSentence": "Cēterī discipuli in hortō ludunt.",
+            "englishSentence": "The rest of the students play in the garden."
+          },
+          {
+            "latin": "custōs",
+            "english": "guard",
+            "latinSentence": "Custōs domūs portas diligenter custōdit.",
+            "englishSentence": "The guard diligently watches over the house's doors."
+          },
+          {
+            "latin": "dīcō",
+            "english": "say",
+            "latinSentence": "Senex dīcit verba sapientia ad discipulos.",
+            "englishSentence": "The old man speaks words of wisdom to the students."
+          },
+          {
+            "latin": "excitō",
+            "english": "arouse, wake up",
+            "latinSentence": "Solis radii excitant aves in silvā tranquilla.",
+            "englishSentence": "The sun's rays wake up the birds in the peaceful forest."
+          },
+          {
+            "latin": "fessus",
+            "english": "tired",
+            "latinSentence": "Puer fessus post longam cursum requiescit.",
+            "englishSentence": "The boy rests after a long run, tired."
+          },
+          {
+            "latin": "interficiō",
+            "english": "kill",
+            "latinSentence": "In bello crudeli, hostem interfecit in proelio.",
+            "englishSentence": "In a cruel war, he killed the enemy in battle."
+          },
+          {
+            "latin": "ita vērō",
+            "english": "yes",
+            "latinSentence": "Ita vērō, respondit magistratus cum gaudio.",
+            "englishSentence": "‘Yes indeed,’ replied the officer with joy."
+          },
+          {
+            "latin": "nōlō",
+            "english": "I do not want",
+            "latinSentence": "Discipulus nōlō lūdere in hora longa.",
+            "englishSentence": "The student does not want to play during a long hour."
+          },
+          {
+            "latin": "novus",
+            "english": "new",
+            "latinSentence": "Librum novum magister discipulis ostendit.",
+            "englishSentence": "The teacher shows the students a new book."
+          },
+          {
+            "latin": "nūllus",
+            "english": "not any, no",
+            "latinSentence": "Nūllus vir audax in pugna apparuit.",
+            "englishSentence": "No brave man appeared in the fight."
+          },
+          {
+            "latin": "possum",
+            "english": "I can, I am able",
+            "latinSentence": "Magister dicit, 'Possum docere et vos discitis.'",
+            "englishSentence": "The teacher says, 'I can teach, and you learn.'"
+          },
+          {
+            "latin": "ruō",
+            "english": "rush",
+            "latinSentence": "Discipulus ruit ad scholam cum celeritate.",
+            "englishSentence": "The student rushes to school with speed."
+          },
+          {
+            "latin": "sē",
+            "english": "himself",
+            "latinSentence": "Puer sē curat in ludo et in schola.",
+            "englishSentence": "The boy takes care of himself both in play and at school."
+          },
+          {
+            "latin": "trahō",
+            "english": "drag",
+            "latinSentence": "Servus trahit sacculos frumenti ad culinam.",
+            "englishSentence": "The slave drags sacks of grain to the kitchen."
+          },
+          {
+            "latin": "vīta",
+            "english": "life",
+            "latinSentence": "Vīta pulchra est, dicit poeta laetus.",
+            "englishSentence": "Life is beautiful, says the joyful poet."
+          },
+          {
+            "latin": "volō",
+            "english": "I want",
+            "latinSentence": "Ego volō linguam Latinam discere.",
+            "englishSentence": "I want to learn the Latin language."
+          },
+          {
+            "latin": "vulnerō",
+            "english": "wound",
+            "latinSentence": "Bellator vulnerat hostem cum gladio firmo.",
+            "englishSentence": "The warrior wounds the enemy with a strong sword."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 14,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 14",
+        "words": [
+          {
+            "latin": "aliquid",
+            "english": "something",
+            "latinSentence": "Aliquid mirabile in silvā reperitur.",
+            "englishSentence": "Something wonderful is found in the forest."
+          },
+          {
+            "latin": "apud",
+            "english": "among, at the house of",
+            "latinSentence": "Discipuli congregantur apud domum magistrī.",
+            "englishSentence": "The students gather at the teacher's house."
+          },
+          {
+            "latin": "attonitus",
+            "english": "astonished",
+            "latinSentence": "Puer attonitus est de nova fabula in schola.",
+            "englishSentence": "The boy is astonished by the new story at school."
+          },
+          {
+            "latin": "aula",
+            "english": "palace",
+            "latinSentence": "Aula regia splendida est sub sole.",
+            "englishSentence": "The royal palace is splendid under the sun."
+          },
+          {
+            "latin": "cotīdiē",
+            "english": "every day",
+            "latinSentence": "Discipuli cotīdiē in schola laborant.",
+            "englishSentence": "The students work every day at school."
+          },
+          {
+            "latin": "decōrus",
+            "english": "right, proper",
+            "latinSentence": "Vestimenta decōra in convivio geruntur.",
+            "englishSentence": "Proper garments are worn at the banquet."
+          },
+          {
+            "latin": "dēleō",
+            "english": "destroy",
+            "latinSentence": "Exercitus dēlet oppidum hostium cum vi.",
+            "englishSentence": "The army destroys the enemy town with force."
+          },
+          {
+            "latin": "deus",
+            "english": "god",
+            "latinSentence": "Deus magnus in caelo regnat.",
+            "englishSentence": "The great god reigns in the sky."
+          },
+          {
+            "latin": "difficilis",
+            "english": "difficult",
+            "latinSentence": "Exercitatio difficilis discipulos provocat.",
+            "englishSentence": "The difficult exercise challenges the students."
+          },
+          {
+            "latin": "dīligenter",
+            "english": "carefully",
+            "latinSentence": "Magister dīligenter libros legendos ordinet.",
+            "englishSentence": "The teacher carefully arranges the books to be read."
+          },
+          {
+            "latin": "domina",
+            "english": "mistress",
+            "latinSentence": "Domina domūs hospitium pulchrum curat.",
+            "englishSentence": "The mistress of the house takes care of the beautiful guesthouse."
+          },
+          {
+            "latin": "dōnum",
+            "english": "present, gift",
+            "latinSentence": "Puer dōnum parvum a matre accepit.",
+            "englishSentence": "The boy received a small gift from his mother."
+          },
+          {
+            "latin": "fidēlis",
+            "english": "faithful, loyal",
+            "latinSentence": "Canis fidēlis dominum suum sequitur.",
+            "englishSentence": "The faithful dog follows its master."
+          },
+          {
+            "latin": "ipse, ipsa",
+            "english": "himself, herself",
+            "latinSentence": "Puella ipsa vestimenta sua eligit.",
+            "englishSentence": "The girl herself chooses her clothes."
+          },
+          {
+            "latin": "iste",
+            "english": "that",
+            "latinSentence": "Iste liber veterānus in bibliotheca iacet.",
+            "englishSentence": "That old book lies in the library."
+          },
+          {
+            "latin": "marītus",
+            "english": "husband",
+            "latinSentence": "Marītus familiam suam diligenter curat.",
+            "englishSentence": "The husband diligently takes care of his family."
+          },
+          {
+            "latin": "necesse",
+            "english": "necessary",
+            "latinSentence": "Est necesse discipuli nova verba discere.",
+            "englishSentence": "It is necessary for the students to learn new words."
+          },
+          {
+            "latin": "num?",
+            "english": "surely... not?",
+            "latinSentence": "Num hoc verum est?",
+            "englishSentence": "Surely... not, is this true?"
+          },
+          {
+            "latin": "quam",
+            "english": "how",
+            "latinSentence": "Quam pulcher est hortus sub sole splendenti!",
+            "englishSentence": "How beautiful is the garden in the shining sun!"
+          },
+          {
+            "latin": "quamquam",
+            "english": "although",
+            "latinSentence": "Quamquam pluit, discipuli in ludo manent.",
+            "englishSentence": "Although it is raining, the students remain in the play area."
+          },
+          {
+            "latin": "-que",
+            "english": "and",
+            "latinSentence": "Magisterque discipuli diligenter audiunt.",
+            "englishSentence": "Both the teacher and the students listen attentively."
+          },
+          {
+            "latin": "rēx",
+            "english": "king",
+            "latinSentence": "Rēx imperium magnum super populum habet.",
+            "englishSentence": "The king has a great empire over the people."
+          },
+          {
+            "latin": "ubi",
+            "english": "when",
+            "latinSentence": "Ubi discipuli conveniunt, sermo incipit.",
+            "englishSentence": "When the students gather, conversation begins."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 15,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 15",
+        "words": [
+          {
+            "latin": "agmen",
+            "english": "column (of men), procession",
+            "latinSentence": "Agmen militum per viam urbis procedit.",
+            "englishSentence": "A column of soldiers marches along the city street."
+          },
+          {
+            "latin": "alius",
+            "english": "other, another",
+            "latinSentence": "Alius discipulus librum novum legit.",
+            "englishSentence": "Another student reads a new book."
+          },
+          {
+            "latin": "aqua",
+            "english": "water",
+            "latinSentence": "Aqua frigida in puteo abundat.",
+            "englishSentence": "Cold water abounds in the well."
+          },
+          {
+            "latin": "claudō",
+            "english": "shut, block",
+            "latinSentence": "Magister fenestram claudit ad silentium.",
+            "englishSentence": "The teacher shuts the window for silence."
+          },
+          {
+            "latin": "commodus",
+            "english": "convenient",
+            "latinSentence": "Locus commodus ad studium est.",
+            "englishSentence": "The place is convenient for studying."
+          },
+          {
+            "latin": "dēbeō",
+            "english": "owe, ought",
+            "latinSentence": "Discipulus dēbet operam tradere magistro.",
+            "englishSentence": "The student ought to show respect to the teacher."
+          },
+          {
+            "latin": "equus",
+            "english": "horse",
+            "latinSentence": "Equus nobilis in agris currit.",
+            "englishSentence": "The noble horse runs in the fields."
+          },
+          {
+            "latin": "etiam",
+            "english": "even",
+            "latinSentence": "Et etiam puella in ludo laeta ridet.",
+            "englishSentence": "Even the girl smiles happily at play."
+          },
+          {
+            "latin": "impediō",
+            "english": "delay, hinder",
+            "latinSentence": "Pluvia impediit viam magistrī ambulare.",
+            "englishSentence": "The rain hinders the teacher's walk."
+          },
+          {
+            "latin": "lectus",
+            "english": "couch",
+            "latinSentence": "Lectus vetus in triclinium iacet.",
+            "englishSentence": "The old couch lies in the dining room."
+          },
+          {
+            "latin": "lentē",
+            "english": "slowly",
+            "latinSentence": "Puer lentē ambulat per hortum virentem.",
+            "englishSentence": "The boy walks slowly through the green garden."
+          },
+          {
+            "latin": "lītus",
+            "english": "sea-shore",
+            "latinSentence": "Lītus aureum sub sole splendet.",
+            "englishSentence": "The golden sea-shore shines under the sun."
+          },
+          {
+            "latin": "mare",
+            "english": "sea",
+            "latinSentence": "Mare vastum fluctuat in tempore ventoso.",
+            "englishSentence": "The vast sea roils in a windy time."
+          },
+          {
+            "latin": "miser",
+            "english": "miserable, wretched",
+            "latinSentence": "Puer miser in via ambulat.",
+            "englishSentence": "The wretched boy walks on the street."
+          },
+          {
+            "latin": "nauta",
+            "english": "sailor",
+            "latinSentence": "Nauta fortis in mari navigat.",
+            "englishSentence": "The brave sailor sails in the sea."
+          },
+          {
+            "latin": "prīnceps",
+            "english": "chief, chieftain",
+            "latinSentence": "Prīnceps exercitus ordinem ducit.",
+            "englishSentence": "The chief of the army leads the formation."
+          },
+          {
+            "latin": "quī",
+            "english": "who",
+            "latinSentence": "Quī ad cenam venit, laetitiam affert.",
+            "englishSentence": "Whoever comes to dinner brings joy."
+          },
+          {
+            "latin": "redeō",
+            "english": "return, go back",
+            "latinSentence": "Discipulus redeit ad domum post scholam.",
+            "englishSentence": "The student returns home after school."
+          },
+          {
+            "latin": "sacerdōs",
+            "english": "priest",
+            "latinSentence": "Sacerdōs templi ritus sacros egit.",
+            "englishSentence": "The priest performed the sacred rites of the temple."
+          },
+          {
+            "latin": "teneō",
+            "english": "hold",
+            "latinSentence": "Magister teneat librum in manu.",
+            "englishSentence": "The teacher holds the book in his hand."
+          },
+          {
+            "latin": "unda",
+            "english": "wave",
+            "latinSentence": "Unda magna in mari impetu agit.",
+            "englishSentence": "A great wave roils in the sea."
+          },
+          {
+            "latin": "vincō",
+            "english": "win",
+            "latinSentence": "Exercitus vincit hostes in proelio.",
+            "englishSentence": "The army wins over the enemies in battle."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 16,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 16",
+        "words": [
+          {
+            "latin": "aedificō",
+            "english": "build",
+            "latinSentence": "Operā aedificat nova domus in oppido.",
+            "englishSentence": "With effort, a new house is built in the town."
+          },
+          {
+            "latin": "auxilium",
+            "english": "help",
+            "latinSentence": "Amicus auxilium praebet in difficultate.",
+            "englishSentence": "The friend provides help in difficulty."
+          },
+          {
+            "latin": "bonus",
+            "english": "good",
+            "latinSentence": "Discipulus bonus semper studet diligenter.",
+            "englishSentence": "A good student always studies diligently."
+          },
+          {
+            "latin": "cōnsentiō",
+            "english": "agree",
+            "latinSentence": "Magister cōnsentit cum discipulīs de regula novā.",
+            "englishSentence": "The teacher agrees with the students about the new rule."
+          },
+          {
+            "latin": "cōnsilium",
+            "english": "plan, idea",
+            "latinSentence": "Cōnsilium sapientis in schola disputatur.",
+            "englishSentence": "The plan of the wise man is discussed at school."
+          },
+          {
+            "latin": "deinde",
+            "english": "then",
+            "latinSentence": "Deinde discipuli ad ludum eunt.",
+            "englishSentence": "Then the students go to play."
+          },
+          {
+            "latin": "dēlectō",
+            "english": "delight",
+            "latinSentence": "Puella dēlectat auditu musicae in aula.",
+            "englishSentence": "The girl delights in hearing music in the hall."
+          },
+          {
+            "latin": "effugiō",
+            "english": "escape",
+            "latinSentence": "Canis effugit ex cavea parva.",
+            "englishSentence": "The dog escapes from the small pen."
+          },
+          {
+            "latin": "flōs",
+            "english": "flower",
+            "latinSentence": "Flōs ruber in horto magnificus crescit.",
+            "englishSentence": "The red flower grows magnificently in the garden."
+          },
+          {
+            "latin": "imperātor",
+            "english": "emperor",
+            "latinSentence": "Imperātor imperium suum largitur populō.",
+            "englishSentence": "The emperor bestows his empire upon the people."
+          },
+          {
+            "latin": "inter",
+            "english": "among",
+            "latinSentence": "Discipuli inter se colloquuntur in schola.",
+            "englishSentence": "The students talk among themselves at school."
+          },
+          {
+            "latin": "ita",
+            "english": "in this way",
+            "latinSentence": "Ita discipuli legunt libros cum cura.",
+            "englishSentence": "In this way, the students read books with care."
+          },
+          {
+            "latin": "melior",
+            "english": "better",
+            "latinSentence": "Dies melior ad ludendum post studium venit.",
+            "englishSentence": "A better day for playing comes after study."
+          },
+          {
+            "latin": "nāvigō",
+            "english": "sail",
+            "latinSentence": "Nauta nāvigat per mare clarum.",
+            "englishSentence": "The sailor sails through the clear sea."
+          },
+          {
+            "latin": "nōnne?",
+            "english": "surely?",
+            "latinSentence": "Nōnne discipuli diligenter laborant?",
+            "englishSentence": "Surely, the students work diligently?"
+          },
+          {
+            "latin": "pereō",
+            "english": "die, perish",
+            "latinSentence": "Bellum crudele multos hominēs perit.",
+            "englishSentence": "In the cruel war, many men perish."
+          },
+          {
+            "latin": "pōnō",
+            "english": "place, put",
+            "latinSentence": "Magister pōnit libros in mensā ordinatos.",
+            "englishSentence": "The teacher places the books orderly on the table."
+          },
+          {
+            "latin": "postrīdiē",
+            "english": "on the next day",
+            "latinSentence": "Postrīdiē discipuli ad scholam revertuntur.",
+            "englishSentence": "On the next day, the students return to school."
+          },
+          {
+            "latin": "pūniō",
+            "english": "punish",
+            "latinSentence": "Magister pūnit discipulum pro errore parvo.",
+            "englishSentence": "The teacher punishes the student for a small mistake."
+          },
+          {
+            "latin": "simulac, simulatque",
+            "english": "as soon as",
+            "latinSentence": "Simulac sol oritur, discipuli currunt ad scholam.",
+            "englishSentence": "As soon as the sun rises, the students run to school."
+          },
+          {
+            "latin": "summus",
+            "english": "highest, greatest",
+            "latinSentence": "Summus honor in schola ad discipulos datur.",
+            "englishSentence": "The highest honor in school is given to the students."
+          },
+          {
+            "latin": "tollō",
+            "english": "raise, lift up",
+            "latinSentence": "Magister tollit pennam ad scribendum in tabulā.",
+            "englishSentence": "The teacher lifts the pen to write on the board."
+          },
+          {
+            "latin": "vertō",
+            "english": "turn",
+            "latinSentence": "Puer vertit librum ad paginam novam legendam.",
+            "englishSentence": "The boy turns the book to a new page to read."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 17,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 17",
+        "words": [
+          {
+            "latin": "ā, ab",
+            "english": "from",
+            "latinSentence": "Librum ā discipulo ad magistrum tradit.",
+            "englishSentence": "The book is handed from the student to the teacher."
+          },
+          {
+            "latin": "animus, animī",
+            "english": "spirit, soul, mind",
+            "latinSentence": "Animus fortis in periculis manet firmus.",
+            "englishSentence": "A brave spirit remains steadfast in dangers."
+          },
+          {
+            "latin": "appropinquō",
+            "english": "approach, come near to",
+            "latinSentence": "Discipulus appropinquat ad magistrum cum quaestione.",
+            "englishSentence": "The student comes near to the teacher with a question."
+          },
+          {
+            "latin": "āra, ārae",
+            "english": "altar",
+            "latinSentence": "Āra in templo sacrum ornata est floribus.",
+            "englishSentence": "The altar in the temple is adorned with flowers."
+          },
+          {
+            "latin": "bene",
+            "english": "well",
+            "latinSentence": "Discipuli bene laborant in schola.",
+            "englishSentence": "The students work well at school."
+          },
+          {
+            "latin": "benignus",
+            "english": "kind",
+            "latinSentence": "Magister benignus discipulis semper auxilium dat.",
+            "englishSentence": "The kind teacher always gives help to the students."
+          },
+          {
+            "latin": "diū",
+            "english": "for a long time",
+            "latinSentence": "Diū discipuli in schola manent ad studendum.",
+            "englishSentence": "The students remain at school for a long time to study."
+          },
+          {
+            "latin": "faber, fabrī",
+            "english": "craftsman",
+            "latinSentence": "Faber diligens multās res ex lignō facit.",
+            "englishSentence": "The craftsman makes many things out of wood."
+          },
+          {
+            "latin": "facilis",
+            "english": "easy",
+            "latinSentence": "Exercitium facile videtur ad discipulos.",
+            "englishSentence": "The exercise seems easy to the students."
+          },
+          {
+            "latin": "graviter",
+            "english": "seriously",
+            "latinSentence": "Discipuli graviter de lectione cogitant.",
+            "englishSentence": "The students think seriously about the lesson."
+          },
+          {
+            "latin": "hīc",
+            "english": "here, to this place",
+            "latinSentence": "Hīc locum conveniunt omnes discipuli.",
+            "englishSentence": "Here, all the students gather."
+          },
+          {
+            "latin": "īnsula, īnsulae",
+            "english": "island",
+            "latinSentence": "Inepta īnsula in mari remota iacet.",
+            "englishSentence": "A deserted island lies in the remote sea."
+          },
+          {
+            "latin": "invītus, invīta, invītum",
+            "english": "unwilling",
+            "latinSentence": "Discipulus invītus nova verba discit.",
+            "englishSentence": "The student learns new words unwillingly."
+          },
+          {
+            "latin": "itaque",
+            "english": "and so",
+            "latinSentence": "Itaque magister verba clara explicat.",
+            "englishSentence": "And so, the teacher explains the clear words."
+          },
+          {
+            "latin": "maximus",
+            "english": "very big",
+            "latinSentence": "Puer videt maximam statuam in foro.",
+            "englishSentence": "The boy sees a very big statue in the market."
+          },
+          {
+            "latin": "negōtium, negōtiī",
+            "english": "business",
+            "latinSentence": "Negōtium familiae in urbe floruit.",
+            "englishSentence": "The family's business flourishes in the city."
+          },
+          {
+            "latin": "numquam",
+            "english": "never",
+            "latinSentence": "Numquam discipuli absentiam faciunt.",
+            "englishSentence": "The students are never absent."
+          },
+          {
+            "latin": "paucī",
+            "english": "few, a few",
+            "latinSentence": "Paucī discipuli in aula laeti sedere solent.",
+            "englishSentence": "Few students are accustomed to sitting happily in the hall."
+          },
+          {
+            "latin": "perveniō",
+            "english": "reach, arrive at",
+            "latinSentence": "Discipulus pervenit ad finem cursus scholāsticus.",
+            "englishSentence": "The student reaches the end of the school course."
+          },
+          {
+            "latin": "quondam",
+            "english": "one day, once",
+            "latinSentence": "Quondam puella narravit fabulam mirabilem.",
+            "englishSentence": "Once, a girl told a wonderful story."
+          },
+          {
+            "latin": "recipiō",
+            "english": "recover, take back",
+            "latinSentence": "Magister recipit librum a discipulo diligenter.",
+            "englishSentence": "The teacher takes back the book from the student carefully."
+          },
+          {
+            "latin": "resistō",
+            "english": "resist",
+            "latinSentence": "Hostes resistunt copiis fortibus in proelio.",
+            "englishSentence": "The enemies resist with strong forces in battle."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 18,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 18",
+        "words": [
+          {
+            "latin": "audeō",
+            "english": "dare",
+            "latinSentence": "Discipulus audet se in viā novā experīrī.",
+            "englishSentence": "The student dares to try himself on a new path."
+          },
+          {
+            "latin": "caput, capitis",
+            "english": "head",
+            "latinSentence": "Caput veterae statuae in museo splendide lucet.",
+            "englishSentence": "The head of the ancient statue shines splendidly in the museum."
+          },
+          {
+            "latin": "coepī",
+            "english": "I began",
+            "latinSentence": "Discipulus coepit novum studium audīre.",
+            "englishSentence": "The student began to listen to the new lesson."
+          },
+          {
+            "latin": "cognōscō",
+            "english": "get to know, find out",
+            "latinSentence": "Magister cognoscit multos discipulōs novos.",
+            "englishSentence": "The teacher gets to know many new students."
+          },
+          {
+            "latin": "dea, deae",
+            "english": "goddess",
+            "latinSentence": "Dea pulchra in templo veneratur.",
+            "englishSentence": "The beautiful goddess is revered in the temple."
+          },
+          {
+            "latin": "dēmōnstrō",
+            "english": "point out, show",
+            "latinSentence": "Magister dēmōnstrat figuram in charta.",
+            "englishSentence": "The teacher shows the figure on the chart."
+          },
+          {
+            "latin": "discēdō",
+            "english": "depart, leave",
+            "latinSentence": "Puer discēdit ex schola post lectionem.",
+            "englishSentence": "The boy leaves the school after the lesson."
+          },
+          {
+            "latin": "fortasse",
+            "english": "perhaps",
+            "latinSentence": "Fortasse discipulī ventūrī sunt ad cenam.",
+            "englishSentence": "Perhaps the students will come to dinner."
+          },
+          {
+            "latin": "ibi",
+            "english": "there",
+            "latinSentence": "Ibi in horto lilia alba florent.",
+            "englishSentence": "There in the garden, white lilies bloom."
+          },
+          {
+            "latin": "libenter",
+            "english": "gladly",
+            "latinSentence": "Magister libenter respondit quaestionibus discipulōrum.",
+            "englishSentence": "The teacher gladly answered the students' questions."
+          },
+          {
+            "latin": "manus, manūs",
+            "english": "hand",
+            "latinSentence": "Manus diligens librum tenet discipulus.",
+            "englishSentence": "The diligent student holds the book in his hand."
+          },
+          {
+            "latin": "mīles, mīlitis",
+            "english": "soldier",
+            "latinSentence": "Mīles fortis in acie strenue pugnat.",
+            "englishSentence": "The brave soldier fights valiantly in the battle line."
+          },
+          {
+            "latin": "nam",
+            "english": "for",
+            "latinSentence": "Nam veritas semper in corde manet.",
+            "englishSentence": "For truth always remains in the heart."
+          },
+          {
+            "latin": "nēmō",
+            "english": "no one",
+            "latinSentence": "Nēmō in schola tam diligenter studet.",
+            "englishSentence": "No one studies so diligently in school."
+          },
+          {
+            "latin": "obstō",
+            "english": "obstruct, block the way",
+            "latinSentence": "Lapides viam obstant in hortō.",
+            "englishSentence": "Stones block the way in the garden."
+          },
+          {
+            "latin": "pars, partis",
+            "english": "part",
+            "latinSentence": "Pars libri difficilis sed pulchra est.",
+            "englishSentence": "A part of the book is difficult but beautiful."
+          },
+          {
+            "latin": "petō",
+            "english": "beg for, ask for",
+            "latinSentence": "Discipulus petit auxilium a magistro.",
+            "englishSentence": "The student asks for help from the teacher."
+          },
+          {
+            "latin": "posteā",
+            "english": "afterwards",
+            "latinSentence": "Posteā omnes discipuli cenam habent.",
+            "englishSentence": "Afterwards, all the students have dinner."
+          },
+          {
+            "latin": "prō",
+            "english": "in front of",
+            "latinSentence": "Magister stetit prō scriniā antīquo.",
+            "englishSentence": "The teacher stood in front of the ancient cabinet."
+          },
+          {
+            "latin": "quō?",
+            "english": "where? where to?",
+            "latinSentence": "Quō iter incipit discipulus in viā longa?",
+            "englishSentence": "Where does the student begin his long journey?"
+          },
+          {
+            "latin": "recūsō",
+            "english": "refuse",
+            "latinSentence": "Discipulus recūsat audīre praecepta dura.",
+            "englishSentence": "The student refuses to listen to harsh instructions."
+          },
+          {
+            "latin": "soleō",
+            "english": "be accustomed",
+            "latinSentence": "Discipulī soleunt studēre quotidie diligenter.",
+            "englishSentence": "The students are accustomed to studying diligently every day."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 19,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 19",
+        "words": [
+          {
+            "latin": "amō",
+            "english": "love, like",
+            "latinSentence": "Discipulus amāt patriam suam sincēre.",
+            "englishSentence": "The student loves his country sincerely."
+          },
+          {
+            "latin": "cārus",
+            "english": "dear",
+            "latinSentence": "Mater cāra fīliam suam semper amat.",
+            "englishSentence": "The mother always loves her dear daughter."
+          },
+          {
+            "latin": "cōgitō",
+            "english": "think, consider",
+            "latinSentence": "Magister cōgitat de novā lectione diligenter.",
+            "englishSentence": "The teacher thinks carefully about the new lesson."
+          },
+          {
+            "latin": "comparō",
+            "english": "obtain",
+            "latinSentence": "Discipulus comparat instrumenta ad scholam.",
+            "englishSentence": "The student obtains the supplies for school."
+          },
+          {
+            "latin": "cōnficiō",
+            "english": "finish",
+            "latinSentence": "Magister cōnficiit lectionem cum disciplina.",
+            "englishSentence": "The teacher finishes the lesson with discipline."
+          },
+          {
+            "latin": "cūrō",
+            "english": "look after",
+            "latinSentence": "Domina cūrā filios suos cum amore.",
+            "englishSentence": "The mistress looks after her children with love."
+          },
+          {
+            "latin": "fīlia",
+            "english": "daughter",
+            "latinSentence": "Fīlia pulchra in horto ludit cum amīcīs.",
+            "englishSentence": "The beautiful daughter plays in the garden with friends."
+          },
+          {
+            "latin": "fluō",
+            "english": "flow",
+            "latinSentence": "Flumen lentē fluat per agrum virentem.",
+            "englishSentence": "The river flows slowly through the green field."
+          },
+          {
+            "latin": "forte",
+            "english": "by chance",
+            "latinSentence": "Forte discipulus invenit librum vetus in foro.",
+            "englishSentence": "By chance, the student found an old book in the market."
+          },
+          {
+            "latin": "grātiās agō",
+            "english": "I thank, give thanks",
+            "latinSentence": "Grātiās agō magistrō pro docēndō sapientiā.",
+            "englishSentence": "I thank the teacher for teaching with wisdom."
+          },
+          {
+            "latin": "hasta",
+            "english": "spear",
+            "latinSentence": "Miles hasta validā in proelio gerit.",
+            "englishSentence": "The soldier carries a strong spear in battle."
+          },
+          {
+            "latin": "illīc",
+            "english": "there, to that place",
+            "latinSentence": "Discipulī ambulant illīc ad scholam antīquam.",
+            "englishSentence": "The students walk there to the old school."
+          },
+          {
+            "latin": "iter",
+            "english": "journey",
+            "latinSentence": "Iter longum per silvas et montes durat.",
+            "englishSentence": "The long journey lasts through forests and mountains."
+          },
+          {
+            "latin": "locus",
+            "english": "place",
+            "latinSentence": "Locus secretus in silva invenitur.",
+            "englishSentence": "A secret place is found in the forest."
+          },
+          {
+            "latin": "māne",
+            "english": "in the morning",
+            "latinSentence": "Māne discipulī ad scholam properant.",
+            "englishSentence": "In the morning, the students hurry to school."
+          },
+          {
+            "latin": "nōvī",
+            "english": "I know",
+            "latinSentence": "Nōvī multās res ex lectione discendae esse.",
+            "englishSentence": "I know there is much to learn from the lesson."
+          },
+          {
+            "latin": "perīculum, perīculī",
+            "english": "danger",
+            "latinSentence": "Perīculum magnum in viā manifestum est.",
+            "englishSentence": "A great danger is evident on the road."
+          },
+          {
+            "latin": "plūrimī",
+            "english": "very many",
+            "latinSentence": "Plūrimī discipulī in schola congregantur.",
+            "englishSentence": "Very many students gather at school."
+          },
+          {
+            "latin": "poscō",
+            "english": "demand, ask for",
+            "latinSentence": "Magister poscit auxilium ab omnibus discipulīs.",
+            "englishSentence": "The teacher demands help from all the students."
+          },
+          {
+            "latin": "tot",
+            "english": "so many",
+            "latinSentence": "Tot librī in bibliotheca inveniri possunt.",
+            "englishSentence": "So many books can be found in the library."
+          },
+          {
+            "latin": "vexō",
+            "english": "annoy",
+            "latinSentence": "Puer parvus vexat fratrēs suos in ludo.",
+            "englishSentence": "The little boy annoys his brothers during play."
+          },
+          {
+            "latin": "vīvō",
+            "english": "live",
+            "latinSentence": "Multi vīvunt in urbe magna cum spe.",
+            "englishSentence": "Many live in the great city with hope."
+          },
+          {
+            "latin": "vix",
+            "english": "hardly, scarcely",
+            "latinSentence": "Discipulī vix audiunt verba magistrī.",
+            "englishSentence": "The students hardly hear the teacher's words."
+          },
+          {
+            "latin": "vōx, vōcis",
+            "english": "voice",
+            "latinSentence": "Vōx clara in theatrō resonat ad laudem.",
+            "englishSentence": "A clear voice resounds in the theatre in praise."
+          }
+        ]
+      },
+      {
+        "chapterNumber": 20,
+        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 20",
+        "words": [
+          {
+            "latin": "adeō",
+            "english": "go up to, approach",
+            "latinSentence": "Discipulus adeit ad magistrum cum quaestione.",
+            "englishSentence": "The student goes up to the teacher with a question."
+          },
+          {
+            "latin": "arcessō",
+            "english": "summon, send for",
+            "latinSentence": "Imperator arcessit duces ad consilium.",
+            "englishSentence": "The emperor summoned the generals for counsel."
+          },
+          {
+            "latin": "ars, artis",
+            "english": "art",
+            "latinSentence": "Ars pulchra in museo exponitur.",
+            "englishSentence": "Beautiful art is exhibited in the museum."
+          },
+          {
+            "latin": "crūdēlis",
+            "english": "cruel",
+            "latinSentence": "Dominus crūdēlis discipulōs severē castigat.",
+            "englishSentence": "The cruel master severely punishes the students."
+          },
+          {
+            "latin": "dēnique",
+            "english": "at last, finally",
+            "latinSentence": "Dēnique dies festus finem habet in urbe.",
+            "englishSentence": "At last, the festive day comes to an end in the city."
+          },
+          {
+            "latin": "dēspērō",
+            "english": "despair",
+            "latinSentence": "Populus dēsperat sub imperio crudeli.",
+            "englishSentence": "The people despair under a cruel regime."
+          },
+          {
+            "latin": "doctus",
+            "english": "learned, clever",
+            "latinSentence": "Vir doctus saepe consilia utilia dat.",
+            "englishSentence": "The learned man often gives useful advice."
+          },
+          {
+            "latin": "domus, domūs",
+            "english": "home",
+            "latinSentence": "Domus antiqua plena est memorabilium.",
+            "englishSentence": "The ancient home is full of memories."
+          },
+          {
+            "latin": "īnferō",
+            "english": "bring in, bring on",
+            "latinSentence": "Magister īnferit novas res ad lectionem.",
+            "englishSentence": "The teacher brings in new materials for the lesson."
+          },
+          {
+            "latin": "līberō",
+            "english": "free, set free",
+            "latinSentence": "Servus līberat captīvum post longum tempus.",
+            "englishSentence": "The slave sets the captive free after a long time."
+          },
+          {
+            "latin": "lūna, lūnae",
+            "english": "moon",
+            "latinSentence": "Lūna plena lucet in caelo sereno.",
+            "englishSentence": "The full moon shines in the serene sky."
+          },
+          {
+            "latin": "mors, mortis",
+            "english": "death",
+            "latinSentence": "Mors inevitabilis omnibus contingit.",
+            "englishSentence": "Death is inevitable for all."
+          },
+          {
+            "latin": "oculus, oculī",
+            "english": "eye",
+            "latinSentence": "Oculus discipulī perspicuus novam rem videt.",
+            "englishSentence": "The student's eye clearly sees something new."
+          },
+          {
+            "latin": "persuādeō",
+            "english": "persuade",
+            "latinSentence": "Magister conatur discipulōs persuādēre de labore.",
+            "englishSentence": "The teacher tries to persuade the students about the work."
+          },
+          {
+            "latin": "pessimus",
+            "english": "very bad, worst",
+            "latinSentence": "Dies pessimus adulescentibus fastidiosus est.",
+            "englishSentence": "The day is very bad and unpleasant for the young."
+          },
+          {
+            "latin": "relinquō",
+            "english": "leave, abandon",
+            "latinSentence": "Magister relinquit librum veterem in aula.",
+            "englishSentence": "The teacher leaves the old book in the hall."
+          },
+          {
+            "latin": "sīcut",
+            "english": "just as, like",
+            "latinSentence": "Sīcut avis volat, discipulus librum legit.",
+            "englishSentence": "Just as a bird flies, the student reads a book."
+          },
+          {
+            "latin": "tam",
+            "english": "so",
+            "latinSentence": "Discipulus tam diligenter laborat ut laude mereret.",
+            "englishSentence": "The student works so diligently that he deserves praise."
+          },
+          {
+            "latin": "temptō",
+            "english": "try",
+            "latinSentence": "Magister temptat novas methodos docendi.",
+            "englishSentence": "The teacher tries new methods of teaching."
+          },
+          {
+            "latin": "vulnus, vulneris",
+            "english": "wound",
+            "latinSentence": "Gladius vulnerat hostem in proelio acerbo.",
+            "englishSentence": "The sword wounds the enemy in the fierce battle."
+          },
+          {
+            "latin": "ūnus",
+            "english": "one",
+            "latinSentence": "Discipulus ūnus solus librum legit.",
+            "englishSentence": "One student reads the book alone."
+          },
+          {
+            "latin": "duo",
+            "english": "two",
+            "latinSentence": "Duo discipuli in aula collocuti sunt.",
+            "englishSentence": "Two students were conversing in the hall."
+          },
+          {
+            "latin": "trēs",
+            "english": "three",
+            "latinSentence": "Trēs pueri in horto ludunt laeti.",
+            "englishSentence": "Three boys play happily in the garden."
+          },
+          {
+            "latin": "quattuor",
+            "english": "four",
+            "latinSentence": "Quattuor fabulae in librō memorabiles sunt.",
+            "englishSentence": "Four stories in the book are memorable."
+          },
+          {
+            "latin": "quīnque",
+            "english": "five",
+            "latinSentence": "Quīnque discipuli librum novum acquirunt.",
+            "englishSentence": "Five students acquire a new book."
+          },
+          {
+            "latin": "sex",
+            "english": "six",
+            "latinSentence": "Sex mīlēs in acie fortiter pugnant.",
+            "englishSentence": "Six soldiers fight valiantly in the battle line."
+          },
+          {
+            "latin": "septem",
+            "english": "seven",
+            "latinSentence": "Septem dies in hebdomadā labōrant discipuli.",
+            "englishSentence": "The students work for seven days in the week."
+          },
+          {
+            "latin": "octō",
+            "english": "eight",
+            "latinSentence": "Octō librī in bibliotheca ordinantur.",
+            "englishSentence": "Eight books are arranged in the library."
+          },
+          {
+            "latin": "novem",
+            "english": "nine",
+            "latinSentence": "Novem flores in vase pulchre sunt.",
+            "englishSentence": "Nine flowers are beautiful in the vase."
+          },
+          {
+            "latin": "decem",
+            "english": "ten",
+            "latinSentence": "Decem discipuli in schola numerantur.",
+            "englishSentence": "Ten students are counted in the school."
+          },
+          {
+            "latin": "vīgintī",
+            "english": "twenty",
+            "latinSentence": "Vīgintī ludi in theatrō recitari solent.",
+            "englishSentence": "Twenty plays are usually performed in the theatre."
+          },
+          {
+            "latin": "trīgintā",
+            "english": "thirty",
+            "latinSentence": "Trīgintā hominēs in forum congregantur.",
+            "englishSentence": "Thirty people gather in the market."
+          },
+          {
+            "latin": "quadrāgintā",
+            "english": "forty",
+            "latinSentence": "Quadrāgintā annī senectūtis signum sunt.",
+            "englishSentence": "Forty years are a sign of old age."
+          },
+          {
+            "latin": "quīnquāgintā",
+            "english": "fifty",
+            "latinSentence": "Quīnquāgintā discipuli in schola discunt.",
+            "englishSentence": "Fifty students study in the school."
+          }
+        ]
+      }
+    ]
+  }
+  
