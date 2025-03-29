@@ -1,0 +1,16 @@
+{
+  "name": "Latin Vocabulary Learning",
+  "short_name": "Latin Vocab",
+  "description": "Learn Latin vocabulary from Cambridge Latin Course with interactive practice",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#9333ea",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

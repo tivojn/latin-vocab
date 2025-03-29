@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const config = require('./config');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,12 +11,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 const VOCABULARY_FILES = {
-  'bk1': path.join(__dirname, 'vocabulary.json'),
-  'bk2': path.join(__dirname, 'vocabulary-bk2.json')
+  'bk1': path.join(__dirname, config.data.vocabularyFiles.bk1),
+  'bk2': path.join(__dirname, config.data.vocabularyFiles.bk2)
 };
 
-const DEFAULT_BOOK = 'bk1';
-const USERS_FILE = path.join(__dirname, 'users.json');
+const DEFAULT_BOOK = config.data.defaultBook;
+const USERS_FILE = path.join(__dirname, config.data.usersFile);
 
 function filterMasteredWords(wordsPool, username) {
   if (!username) return wordsPool;
@@ -32,7 +33,8 @@ function filterMasteredWords(wordsPool, username) {
     .filter(([latin, progress]) => {
       const { correctCount, incorrectCount } = progress;
       const total = correctCount + incorrectCount;
-      return correctCount >= 3 && (correctCount / total) >= 0.75;
+      return correctCount >= config.learningAlgorithm.masterThreshold && 
+             (correctCount / total) >= config.learningAlgorithm.masterAccuracyThreshold;
     })
     .map(([latin]) => latin);
   
@@ -154,8 +156,16 @@ app.get('/api/practice/next-question', (req, res) => {
   let selectedWord = null;
   let recentlyUsedWords = [];
   
-  if (!global.usedWordsTracker) {
+  if (typeof global.usedWordsTracker === 'undefined') {
     global.usedWordsTracker = {};
+  }
+  
+  // Reset tracker if in a serverless environment (like Vercel)
+  if (process.env.VERCEL) {
+    if (!global._vercelTracker) {
+      global._vercelTracker = {};
+    }
+    global.usedWordsTracker = global._vercelTracker;
   }
   
   if (req.query.username) {
@@ -207,7 +217,7 @@ app.get('/api/practice/next-question', (req, res) => {
         if (!progress) return false;
         
         const total = progress.correctCount + progress.incorrectCount;
-        return total > 0 && (progress.incorrectCount / total) > 0.3;
+        return total > 0 && (progress.incorrectCount / total) > config.learningAlgorithm.weakWordThreshold;
       });
       
       if (wordsPool.length === 0) {
@@ -316,7 +326,7 @@ app.get('/api/practice/next-question', (req, res) => {
     const history = global.usedWordsTracker[req.query.username].wordHistory;
     history.push(wordToUse.latin);
     
-    if (history.length > 10) {
+    if (history.length > config.learningAlgorithm.recentWordsMaxCount) {
       history.shift();
     }
   }
@@ -607,8 +617,16 @@ app.post('/api/practice/submit-answer', (req, res) => {
     };
   }
   
-  if (!global.usedWordsTracker) {
+  if (typeof global.usedWordsTracker === 'undefined') {
     global.usedWordsTracker = {};
+  }
+  
+  // Reset tracker if in a serverless environment (like Vercel)
+  if (process.env.VERCEL) {
+    if (!global._vercelTracker) {
+      global._vercelTracker = {};
+    }
+    global.usedWordsTracker = global._vercelTracker;
   }
   
   if (!global.usedWordsTracker[username]) {
@@ -697,6 +715,30 @@ app.post('/api/users/login', (req, res) => {
     username: user.username,
     chapterProgress: user.chapterProgress
   });
+});
+
+// Handle 404 errors - must be placed after all other routes
+app.use((req, res) => {
+  // Check if the request is for an API endpoint
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  
+  // For non-API requests, serve the 404.html page
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  
+  // Check if the request is for an API endpoint
+  if (req.path.startsWith('/api/')) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+  
+  // For non-API requests, send a simple error page
+  res.status(500).send('Server error. Please try again later.');
 });
 
 app.listen(PORT, () => {

@@ -117,15 +117,15 @@
         },
         "hortus": {
           "correctCount": 6,
-          "incorrectCount": 1
+          "incorrectCount": 2
         },
         "via": {
-          "correctCount": 9,
+          "correctCount": 10,
           "incorrectCount": 0
         },
         "māter": {
           "correctCount": 8,
-          "incorrectCount": 0
+          "incorrectCount": 1
         },
         "fīlius": {
           "correctCount": 7,
@@ -137,7 +137,7 @@
         },
         "labōrat": {
           "correctCount": 6,
-          "incorrectCount": 0
+          "incorrectCount": 1
         },
         "cibus": {
           "correctCount": 1,
@@ -629,7 +629,7 @@
         },
         "labōrat": {
           "correctCount": 1,
-          "incorrectCount": 0
+          "incorrectCount": 1
         },
         "hortus": {
           "correctCount": 2,
@@ -646,6 +646,14 @@
         "sedet": {
           "correctCount": 1,
           "incorrectCount": 0
+        },
+        "mendāx": {
+          "correctCount": 0,
+          "incorrectCount": 1
+        },
+        "agit": {
+          "correctCount": 0,
+          "incorrectCount": 1
         }
       }
     }
