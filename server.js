@@ -4,10 +4,21 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const config = require('./config');
 
+const BASE_PATH = process.env.VERCEL ? '/Latin-Vocab-Shadcn' : '';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+  if (req.url.startsWith(BASE_PATH)) {
+    req.url = req.url.substring(BASE_PATH.length);
+  }
+  next();
+});
+
+app.use(express.static(path.join(__dirname, 'public'), {
+  index: false
+}));
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -82,7 +93,7 @@ function readJsonFile(filePath) {
         } 
         else if (fileName === 'vocabulary.json' || fileName === 'vocabulary-bk2.json') {
           console.log(`Missing vocabulary file: ${fileName}`);
-          return { chapters: [] };
+          return { stages: [] };
         }
       }
       
@@ -111,8 +122,8 @@ function readJsonFile(filePath) {
         return { users: [] };
       } 
       else if (fileName === 'vocabulary.json' || fileName === 'vocabulary-bk2.json') {
-        console.log(`Returning empty chapters for ${fileName} due to error`);
-        return { chapters: [] };
+        console.log(`Returning empty stages for ${fileName} due to error`);
+        return { stages: [] };
       }
     }
     
@@ -164,7 +175,7 @@ function writeJsonFile(filePath, data) {
   }
 }
 
-app.get('/api/vocabulary/chapters', (req, res) => {
+app.get('/api/vocabulary/stages', (req, res) => {
   try {
     const book = req.query.book || DEFAULT_BOOK;
     const vocabularyFile = VOCABULARY_FILES[book] || VOCABULARY_FILES[DEFAULT_BOOK];
@@ -175,7 +186,7 @@ app.get('/api/vocabulary/chapters', (req, res) => {
       return res.status(500).json({ error: 'Failed to read vocabulary data' });
     }
     
-    res.json(vocabularyData.chapters);
+    res.json(vocabularyData.stages);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -194,8 +205,8 @@ app.get('/api/vocabulary/books', (req, res) => {
   }
 });
 
-app.get('/api/vocabulary/chapters/:chapterNumber', (req, res) => {
-  const chapterNumber = parseInt(req.params.chapterNumber, 10);
+app.get('/api/vocabulary/stages/:stageNumber', (req, res) => {
+  const stageNumber = parseInt(req.params.stageNumber, 10);
   const book = req.query.book || DEFAULT_BOOK;
   const vocabularyFile = VOCABULARY_FILES[book] || VOCABULARY_FILES[DEFAULT_BOOK];
   
@@ -206,20 +217,20 @@ app.get('/api/vocabulary/chapters/:chapterNumber', (req, res) => {
       return res.status(500).json({ error: 'Failed to read vocabulary data' });
     }
     
-    const chapter = vocabularyData.chapters.find(c => c.chapterNumber === chapterNumber);
+    const stage = vocabularyData.stages.find(s => s.stageNumber === stageNumber);
     
-    if (!chapter) {
-      return res.status(404).json({ error: 'Chapter not found' });
+    if (!stage) {
+      return res.status(404).json({ error: 'Stage not found' });
     }
     
-    res.json(chapter);
+    res.json(stage);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
 app.get('/api/practice/next-question', (req, res) => {
-  const { chapter, mode, questionFormat, book } = req.query;
+  const { stage, mode, questionFormat, book } = req.query;
   const vocabularyFile = VOCABULARY_FILES[book || DEFAULT_BOOK];
   const vocabularyData = readJsonFile(vocabularyFile);
   
@@ -248,8 +259,8 @@ app.get('/api/practice/next-question', (req, res) => {
       global.usedWordsTracker[req.query.username] = {
         wordHistory: [],
         incorrectWords: new Set(),
-        lastChapter: null,
-        chapterWordIndex: 0
+        lastStage: null,
+        stageWordIndex: 0
       };
     }
     
@@ -270,8 +281,8 @@ app.get('/api/practice/next-question', (req, res) => {
     const incorrectWordSet = global.usedWordsTracker[req.query.username].incorrectWords;
     if (incorrectWordSet.size > 0) {
       const allWords = [];
-      vocabularyData.chapters.forEach(chapter => {
-        allWords.push(...chapter.words);
+      vocabularyData.stages.forEach(stage => {
+        allWords.push(...stage.words);
       });
       
       const incorrectWords = allWords.filter(word => incorrectWordSet.has(word.latin));
@@ -283,8 +294,8 @@ app.get('/api/practice/next-question', (req, res) => {
     }
     
     if (!selectedWord) {
-      vocabularyData.chapters.forEach(chapter => {
-        wordsPool = [...wordsPool, ...chapter.words];
+      vocabularyData.stages.forEach(stage => {
+        wordsPool = [...wordsPool, ...stage.words];
       });
       
       wordsPool = wordsPool.filter(word => {
@@ -296,8 +307,8 @@ app.get('/api/practice/next-question', (req, res) => {
       });
       
       if (wordsPool.length === 0) {
-        const chapterIndex = Math.max(0, Math.min(vocabularyData.chapters.length - 1, user.chapterProgress - 1));
-        wordsPool = vocabularyData.chapters[chapterIndex].words;
+        const stageIndex = Math.max(0, Math.min(vocabularyData.stages.length - 1, user.stageProgress - 1));
+        wordsPool = vocabularyData.stages[stageIndex].words;
       }
       
       wordsPool = filterMasteredWords(wordsPool, req.query.username);
@@ -309,23 +320,23 @@ app.get('/api/practice/next-question', (req, res) => {
           global.usedWordsTracker[req.query.username].wordHistory = [];
         }
         
-        const chapterIndex = Math.max(0, Math.min(vocabularyData.chapters.length - 1, user.chapterProgress - 1));
-        wordsPool = vocabularyData.chapters[chapterIndex].words;
+        const stageIndex = Math.max(0, Math.min(vocabularyData.stages.length - 1, user.stageProgress - 1));
+        wordsPool = vocabularyData.stages[stageIndex].words;
       }
     }
-  } else if (chapter) {
-    const chapterNumber = parseInt(chapter, 10);
-    const selectedChapter = vocabularyData.chapters.find(c => c.chapterNumber === chapterNumber);
+  } else if (stage) {
+    const stageNumber = parseInt(stage, 10);
+    const selectedStage = vocabularyData.stages.find(s => s.stageNumber === stageNumber);
     
-    if (!selectedChapter) {
-      return res.status(404).json({ error: 'Chapter not found' });
+    if (!selectedStage) {
+      return res.status(404).json({ error: 'Stage not found' });
     }
     
     if (req.query.username) {
       const incorrectWordSet = global.usedWordsTracker[req.query.username].incorrectWords;
       
       if (incorrectWordSet.size > 0) {
-        const incorrectWords = selectedChapter.words.filter(word => incorrectWordSet.has(word.latin));
+        const incorrectWords = selectedStage.words.filter(word => incorrectWordSet.has(word.latin));
         
         if (incorrectWords.length > 0) {
           selectedWord = incorrectWords[0];
@@ -335,7 +346,7 @@ app.get('/api/practice/next-question', (req, res) => {
     }
     
     if (!selectedWord) {
-      wordsPool = selectedChapter.words;
+      wordsPool = selectedStage.words;
       
       wordsPool = filterMasteredWords(wordsPool, req.query.username);
       
@@ -346,14 +357,14 @@ app.get('/api/practice/next-question', (req, res) => {
           if (req.query.username) {
             global.usedWordsTracker[req.query.username].wordHistory = [];
           }
-          wordsPool = selectedChapter.words;
+          wordsPool = selectedStage.words;
           
           wordsPool = filterMasteredWords(wordsPool, req.query.username);
         }
       }
     }
   } else {
-    wordsPool = vocabularyData.chapters[0].words;
+    wordsPool = vocabularyData.stages[0].words;
     
     wordsPool = filterMasteredWords(wordsPool, req.query.username);
   }
@@ -372,18 +383,18 @@ app.get('/api/practice/next-question', (req, res) => {
       return res.status(404).json({ error: 'No words available for practice' });
     }
     
-    const currentChapter = chapter ? parseInt(chapter, 10) : null;
+    const currentStage = stage ? parseInt(stage, 10) : null;
     
-    if (userTracker && currentChapter) {
-      if (userTracker.lastChapter !== currentChapter) {
-        userTracker.chapterWordIndex = 0;
-        userTracker.lastChapter = currentChapter;
+    if (userTracker && currentStage) {
+      if (userTracker.lastStage !== currentStage) {
+        userTracker.stageWordIndex = 0;
+        userTracker.lastStage = currentStage;
       }
       
-      const wordIndex = userTracker.chapterWordIndex % wordsPool.length;
+      const wordIndex = userTracker.stageWordIndex % wordsPool.length;
       
       wordToUse = wordsPool[wordIndex];
-      userTracker.chapterWordIndex = (wordIndex + 1) % wordsPool.length;
+      userTracker.stageWordIndex = (wordIndex + 1) % wordsPool.length;
     } else {
       const unusedWords = wordsPool.filter(word => !recentlyUsedWords.includes(word.latin));
       
@@ -415,8 +426,8 @@ app.get('/api/practice/next-question', (req, res) => {
   if (format === 'multiple-choice') {
     if (direction === 'latin-to-english') {
       const distractorPool = [];
-      vocabularyData.chapters.forEach(chapter => {
-        distractorPool.push(...chapter.words.filter(w => w.latin !== wordToUse.latin));
+      vocabularyData.stages.forEach(stage => {
+        distractorPool.push(...stage.words.filter(w => w.latin !== wordToUse.latin));
       });
       
       const shuffledPool = [...distractorPool].sort(() => 0.5 - Math.random());
@@ -464,8 +475,8 @@ app.get('/api/practice/next-question', (req, res) => {
       };
     } else {
       const distractorPool = [];
-      vocabularyData.chapters.forEach(chapter => {
-        distractorPool.push(...chapter.words.filter(w => w.latin !== wordToUse.latin));
+      vocabularyData.stages.forEach(stage => {
+        distractorPool.push(...stage.words.filter(w => w.latin !== wordToUse.latin));
       });
       
       const shuffledPool = [...distractorPool].sort(() => 0.5 - Math.random());
@@ -637,8 +648,8 @@ app.post('/api/practice/submit-answer', (req, res) => {
   
   let correctWord = null;
   
-  for (const chapter of vocabularyData.chapters) {
-    const foundWord = chapter.words.find(word => word.latin === latinWord);
+  for (const stage of vocabularyData.stages) {
+    const foundWord = stage.words.find(word => word.latin === latinWord);
     if (foundWord) {
       correctWord = foundWord;
       break;
@@ -708,8 +719,8 @@ app.post('/api/practice/submit-answer', (req, res) => {
     global.usedWordsTracker[username] = {
       wordHistory: [],
       incorrectWords: new Set(),
-      lastChapter: null,
-      chapterWordIndex: 0
+      lastStage: null,
+      stageWordIndex: 0
     };
   }
   
@@ -751,7 +762,7 @@ app.get('/api/users/:username/progress', (req, res) => {
   }
   
   res.json({
-    chapterProgress: user.chapterProgress,
+    stageProgress: user.stageProgress,
     vocabProgress: user.vocabProgress
   });
 });
@@ -775,7 +786,7 @@ app.post('/api/users/login', (req, res) => {
     user = {
       username,
       passwordHash: "tempHash",
-      chapterProgress: 1,
+      stageProgress: 1,
       vocabProgress: {}
     };
     
@@ -788,7 +799,7 @@ app.post('/api/users/login', (req, res) => {
   
   res.json({
     username: user.username,
-    chapterProgress: user.chapterProgress
+    stageProgress: user.stageProgress
   });
 });
 
@@ -808,7 +819,7 @@ app.get('/api/debug/environment', (req, res) => {
 
 app.get('/api/debug/files', (req, res) => {
   const files = {
-    'vocabulary.json': {
+    'vocabulary-bk1.json': {
       exists: fs.existsSync(VOCABULARY_FILES['bk1']),
       message: ''
     },
@@ -844,7 +855,7 @@ app.get('/api/debug/files', (req, res) => {
       try {
         const filePath = file.includes('public/') 
           ? path.join(__dirname, file)
-          : (file === 'vocabulary.json' 
+          : (file === 'vocabulary-bk1.json' 
               ? VOCABULARY_FILES['bk1'] 
               : (file === 'vocabulary-bk2.json' 
                   ? VOCABULARY_FILES['bk2'] 
@@ -932,7 +943,7 @@ app.get('/api/debug/create-test-user', (req, res) => {
       usersData.users.push({
         username: 'test_user',
         passwordHash: 'test_hash',
-        chapterProgress: 1,
+        stageProgress: 1,
         vocabProgress: {}
       });
       
@@ -993,12 +1004,10 @@ app.use((err, req, res, next) => {
   res.status(500).send('Server error. Please try again later.');
 });
 
-// Start server only in non-production environment
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 }
 
-// Export the Express app for Vercel
 module.exports = app;

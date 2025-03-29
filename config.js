@@ -15,7 +15,7 @@ module.exports = {
   // File paths for data
   data: {
     vocabularyFiles: {
-      bk1: './vocabulary.json',
+      bk1: './vocabulary-bk1.json',
       bk2: './vocabulary-bk2.json'
     },
     usersFile: './users.json',

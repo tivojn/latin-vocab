@@ -89,33 +89,33 @@ async function showWeakWords(e) {
   }
 }
 
-async function showChapterVocabulary(e) {
+async function showStageVocabulary(e) {
   e.preventDefault();
   
-  if (!appState.selectedChapter) {
-    showError('Please select a chapter first.');
+  if (!appState.selectedStage) {
+    showError('Please select a stage first.');
     return;
   }
   
   try {
-    // Fetch chapter data
-    const response = await fetch(`/api/vocabulary/chapters/${appState.selectedChapter}?book=${appState.selectedBook}`);
+    // Fetch stage data
+    const response = await fetch(apiUrl(`/api/vocabulary/stages/${appState.selectedStage}?book=${appState.selectedBook}`));
     
     if (!response.ok) {
-      throw new Error('Failed to fetch chapter vocabulary');
+      throw new Error('Failed to fetch stage vocabulary');
     }
     
-    const chapterData = await response.json();
-    debugLog.success('showChapterVocabulary', 'Chapter data received', chapterData);
+    const stageData = await response.json();
+    debugLog.success('showStageVocabulary', 'Stage data received', stageData);
     
     // Set the modal title
-    elements.vocabListTitle.textContent = `Chapter ${chapterData.chapterNumber}: ${chapterData.chapterTitle}`;
+    elements.vocabListTitle.textContent = `Stage ${stageData.stageNumber}: ${stageData.stageTitle}`;
     
     // Populate the vocabulary list
     elements.vocabListContent.innerHTML = '';
     
-    if (!chapterData.words || chapterData.words.length === 0) {
-      elements.vocabListContent.innerHTML = '<div class="p-4 text-gray-500">No vocabulary words found for this chapter.</div>';
+    if (!stageData.words || stageData.words.length === 0) {
+      elements.vocabListContent.innerHTML = '<div class="p-4 text-gray-500">No vocabulary words found for this stage.</div>';
     } else {
       // Create a table for better presentation
       const table = document.createElement('table');
@@ -128,7 +128,7 @@ async function showChapterVocabulary(e) {
           </tr>
         </thead>
         <tbody>
-          ${chapterData.words.map((word, index) => `
+          ${stageData.words.map((word, index) => `
             <tr class="${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">
               <td class="px-4 py-2 font-medium">${word.latin}</td>
               <td class="px-4 py-2">${word.english}</td>
@@ -143,11 +143,11 @@ async function showChapterVocabulary(e) {
     // Show the modal
     elements.vocabListContainer.classList.remove('hidden');
   } catch (error) {
-    debugLog.error('showChapterVocabulary', 'Error fetching chapter vocabulary', { 
+    debugLog.error('showStageVocabulary', 'Error fetching stage vocabulary', { 
       message: error.message, 
       stack: error.stack 
     });
-    showError('Failed to load chapter vocabulary. Please try again.');
+    showError('Failed to load stage vocabulary. Please try again.');
   }
 }
 
@@ -327,36 +327,36 @@ function hideVocabList() {
   elements.vocabListContainer.classList.add('hidden');
 }
 
-// Helper function to get all vocabulary words from all chapters
+// Helper function to get all vocabulary words from all stages
 async function getAllVocabularyWords() {
   try {
-    // Fetch all chapters
-    const response = await fetch(`/api/vocabulary/chapters?book=${appState.selectedBook}`);
+    // Fetch all stages
+    const response = await fetch(apiUrl(`/api/vocabulary/stages?book=${appState.selectedBook}`));
     
     if (!response.ok) {
-      throw new Error('Failed to fetch chapters');
+      throw new Error('Failed to fetch stages');
     }
     
-    const chapters = await response.json();
+    const stages = await response.json();
     
-    // Collect all words from all chapters
+    // Collect all words from all stages
     let allWords = [];
     
-    // For each chapter, fetch its words
-    for (const chapter of chapters) {
-      const chapterResponse = await fetch(`/api/vocabulary/chapters/${chapter.chapterNumber}?book=${appState.selectedBook}`);
+    // For each stage, fetch its words
+    for (const stage of stages) {
+      const stageResponse = await fetch(apiUrl(`/api/vocabulary/stages/${stage.stageNumber}?book=${appState.selectedBook}`));
       
-      if (chapterResponse.ok) {
-        const chapterData = await chapterResponse.json();
+      if (stageResponse.ok) {
+        const stageData = await stageResponse.json();
         
-        if (chapterData.words && chapterData.words.length > 0) {
-          // Add chapter number to each word
-          const wordsWithChapter = chapterData.words.map(word => ({
+        if (stageData.words && stageData.words.length > 0) {
+          // Add stage number to each word
+          const wordsWithStage = stageData.words.map(word => ({
             ...word,
-            chapterNumber: chapter.chapterNumber
+            stageNumber: stage.stageNumber
           }));
           
-          allWords = [...allWords, ...wordsWithChapter];
+          allWords = [...allWords, ...wordsWithStage];
         }
       }
     }
@@ -373,9 +373,9 @@ async function getAllVocabularyWords() {
 const appState = {
   currentUser: null,
   selectedBook: 'bk1', // Default to Book 1
-  selectedChapter: null,
+  selectedStage: null,
   currentQuestion: null,
-  chapters: [],
+  stages: [],
   books: [],
   practiceMode: null,
   questionFormat: 'multiple-choice'
@@ -440,20 +440,20 @@ const elements = {
   logoutBtn: document.getElementById('logout-btn'),
   currentUserSpan: document.getElementById('current-user'),
   
-  // Books and Chapters
+  // Books and Stages
   bookSelect: document.getElementById('book-select'),
-  chapterSelect: document.getElementById('chapter-select'),
+  stageSelect: document.getElementById('stage-select'),
   
   // Progress section
   progressSection: document.getElementById('progress-section'),
-  currentChapterSpan: document.getElementById('current-chapter'),
+  currentStageSpan: document.getElementById('current-stage'),
   masteredCountSpan: document.getElementById('mastered-count'),
   learningCountSpan: document.getElementById('learning-count'),
   weakWordsCountSpan: document.getElementById('weak-words-count'),
   masteredWordsLink: document.getElementById('mastered-words-link'),
   learningWordsLink: document.getElementById('learning-words-link'),
   weakWordsLink: document.getElementById('weak-words-link'),
-  chapterVocabLink: document.getElementById('chapter-vocab-link'),
+  stageVocabLink: document.getElementById('stage-vocab-link'),
   
   // Vocabulary Lists
   vocabListContainer: document.getElementById('vocab-list-container'),
@@ -462,7 +462,7 @@ const elements = {
   closeVocabListBtn: document.getElementById('close-vocab-list-btn'),
   
   // Practice options
-  practiceChapterBtn: document.getElementById('practice-chapter-btn'),
+  practiceStageBtn: document.getElementById('practice-stage-btn'),
   practiceWeakBtn: document.getElementById('practice-weak-btn'),
   multipleChoiceBtn: document.getElementById('multiple-choice-btn'),
   fillInBlankBtn: document.getElementById('fill-in-blank-btn'),
@@ -500,12 +500,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
-  // Book and chapter selection
+  // Book and stage selection
   elements.bookSelect.addEventListener('change', handleBookSelection);
-  elements.chapterSelect.addEventListener('change', handleChapterSelection);
+  elements.stageSelect.addEventListener('change', handleStageSelection);
   
   // Practice modes
-  elements.practiceChapterBtn.addEventListener('click', () => startPractice('chapter'));
+  elements.practiceStageBtn.addEventListener('click', () => startPractice('stage'));
   elements.practiceWeakBtn.addEventListener('click', () => startPractice('weak-words'));
   
   // Question format toggle
@@ -532,15 +532,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // Vocabulary list links
-  elements.chapterVocabLink.addEventListener('click', showChapterVocabulary);
+  elements.stageVocabLink.addEventListener('click', showStageVocabulary);
   elements.masteredWordsLink.addEventListener('click', showMasteredWords);
   elements.learningWordsLink.addEventListener('click', showLearningWords);
   elements.weakWordsLink.addEventListener('click', showWeakWords);
   elements.closeVocabListBtn.addEventListener('click', hideVocabList);
   
-  // Load books and chapters on init
+  // Load books and stages on init
   fetchBooks();
-  fetchChapters(appState.selectedBook);
+  fetchStages(appState.selectedBook);
 });
 
 // Function to set question format
@@ -563,7 +563,7 @@ function setQuestionFormat(format) {
 async function fetchBooks() {
   try {
     debugLog.info('fetchBooks', 'Fetching books...');
-    const response = await fetch('/api/vocabulary/books');
+    const response = await fetch(apiUrl('/api/vocabulary/books'));
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -588,68 +588,68 @@ async function fetchBooks() {
   }
 }
 
-async function fetchChapters(bookId) {
+async function fetchStages(bookId) {
   try {
-    debugLog.info('fetchChapters', `Fetching chapters for book ${bookId}...`);
-    const response = await fetch(`/api/vocabulary/chapters?book=${bookId}`);
+    debugLog.info('fetchStages', `Fetching stages for book ${bookId}...`);
+    const response = await fetch(apiUrl(`/api/vocabulary/stages?book=${bookId}`));
     
     if (!response.ok) {
       const errorText = await response.text();
-      debugLog.error('fetchChapters', 'Failed to fetch chapters', { status: response.status, statusText: response.statusText, body: errorText });
-      throw new Error('Failed to fetch chapters');
+      debugLog.error('fetchStages', 'Failed to fetch stages', { status: response.status, statusText: response.statusText, body: errorText });
+      throw new Error('Failed to fetch stages');
     }
     
-    const chapters = await response.json();
-    debugLog.success('fetchChapters', 'Chapters received', { bookId, chapters });
+    const stages = await response.json();
+    debugLog.success('fetchStages', 'Stages received', { bookId, stages });
     
-    // Store chapters in app state
-    appState.chapters = chapters;
+    // Store stages in app state
+    appState.stages = stages;
     
-    // Render chapters
-    renderChapters(chapters);
+    // Render stages
+    renderStages(stages);
   } catch (error) {
-    debugLog.error('fetchChapters', 'Error fetching chapters', { message: error.message, stack: error.stack });
-    showError('Failed to load chapters. Please try again later.');
+    debugLog.error('fetchStages', 'Error fetching stages', { message: error.message, stack: error.stack });
+    showError('Failed to load stages. Please try again later.');
     
-    // Load fallback chapters
-    renderFallbackChapters();
+    // Load fallback stages
+    renderFallbackStages();
   }
 }
 
-// Render fallback chapters if API fails
-function renderFallbackChapters() {
-  let fallbackChapters = [];
+// Render fallback stages if API fails
+function renderFallbackStages() {
+  let fallbackStages = [];
   
   if (appState.selectedBook === 'bk1') {
-    fallbackChapters = [
-      { chapterNumber: 1, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 1" },
-      { chapterNumber: 2, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 2" },
-      { chapterNumber: 3, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 3" },
-      { chapterNumber: 4, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 4" },
-      { chapterNumber: 5, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 5" },
-      { chapterNumber: 6, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 6" },
-      { chapterNumber: 7, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 7" },
-      { chapterNumber: 8, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 8" },
-      { chapterNumber: 9, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 9" },
-      { chapterNumber: 10, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 10" },
-      { chapterNumber: 11, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 11" },
-      { chapterNumber: 12, chapterTitle: "Cambridge Latin Course Book 1 - Checklist 12" }
+    fallbackStages = [
+      { stageNumber: 1, stageTitle: "Cambridge Latin Course Book 1 - Checklist 1" },
+      { stageNumber: 2, stageTitle: "Cambridge Latin Course Book 1 - Checklist 2" },
+      { stageNumber: 3, stageTitle: "Cambridge Latin Course Book 1 - Checklist 3" },
+      { stageNumber: 4, stageTitle: "Cambridge Latin Course Book 1 - Checklist 4" },
+      { stageNumber: 5, stageTitle: "Cambridge Latin Course Book 1 - Checklist 5" },
+      { stageNumber: 6, stageTitle: "Cambridge Latin Course Book 1 - Checklist 6" },
+      { stageNumber: 7, stageTitle: "Cambridge Latin Course Book 1 - Checklist 7" },
+      { stageNumber: 8, stageTitle: "Cambridge Latin Course Book 1 - Checklist 8" },
+      { stageNumber: 9, stageTitle: "Cambridge Latin Course Book 1 - Checklist 9" },
+      { stageNumber: 10, stageTitle: "Cambridge Latin Course Book 1 - Checklist 10" },
+      { stageNumber: 11, stageTitle: "Cambridge Latin Course Book 1 - Checklist 11" },
+      { stageNumber: 12, stageTitle: "Cambridge Latin Course Book 1 - Checklist 12" }
     ];
   } else {
-    fallbackChapters = [
-      { chapterNumber: 13, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 13" },
-      { chapterNumber: 14, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 14" },
-      { chapterNumber: 15, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 15" },
-      { chapterNumber: 16, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 16" },
-      { chapterNumber: 17, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 17" },
-      { chapterNumber: 18, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 18" },
-      { chapterNumber: 19, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 19" },
-      { chapterNumber: 20, chapterTitle: "Cambridge Latin Course Book 2 - Checklist 20" }
+    fallbackStages = [
+      { stageNumber: 13, stageTitle: "Cambridge Latin Course Book 2 - Checklist 13" },
+      { stageNumber: 14, stageTitle: "Cambridge Latin Course Book 2 - Checklist 14" },
+      { stageNumber: 15, stageTitle: "Cambridge Latin Course Book 2 - Checklist 15" },
+      { stageNumber: 16, stageTitle: "Cambridge Latin Course Book 2 - Checklist 16" },
+      { stageNumber: 17, stageTitle: "Cambridge Latin Course Book 2 - Checklist 17" },
+      { stageNumber: 18, stageTitle: "Cambridge Latin Course Book 2 - Checklist 18" },
+      { stageNumber: 19, stageTitle: "Cambridge Latin Course Book 2 - Checklist 19" },
+      { stageNumber: 20, stageTitle: "Cambridge Latin Course Book 2 - Checklist 20" }
     ];
   }
   
-  appState.chapters = fallbackChapters;
-  renderChapters(fallbackChapters);
+  appState.stages = fallbackStages;
+  renderStages(fallbackStages);
 }
 
 // Handle book selection
@@ -659,29 +659,29 @@ function handleBookSelection() {
   
   // Update state
   appState.selectedBook = selectedBook;
-  appState.selectedChapter = null; // Reset chapter selection when book changes
+  appState.selectedStage = null; // Reset stage selection when book changes
   
-  // Reset chapter dropdown
-  elements.chapterSelect.innerHTML = '<option value="">Loading chapters...</option>';
+  // Reset stage dropdown
+  elements.stageSelect.innerHTML = '<option value="">Loading stages...</option>';
   
-  // Fetch chapters for new book
-  fetchChapters(selectedBook);
+  // Fetch stages for new book
+  fetchStages(selectedBook);
 }
 
-// Handle chapter selection
-function handleChapterSelection() {
-  const selectedChapter = parseInt(elements.chapterSelect.value, 10);
-  console.log(`Chapter selected: ${selectedChapter}`);
+// Handle stage selection
+function handleStageSelection() {
+  const selectedStage = parseInt(elements.stageSelect.value, 10);
+  console.log(`Stage selected: ${selectedStage}`);
   
-  if (!isNaN(selectedChapter)) {
+  if (!isNaN(selectedStage)) {
     // Update state
-    appState.selectedChapter = selectedChapter;
+    appState.selectedStage = selectedStage;
     
-    // Update the current chapter display in Your Progress section
-    elements.currentChapterSpan.textContent = selectedChapter;
+    // Update the current stage display in Your Progress section
+    elements.currentStageSpan.textContent = selectedStage;
   } else {
-    // If no chapter is selected (e.g., the default 'Select a chapter...' option)
-    appState.selectedChapter = null;
+    // If no stage is selected (e.g., the default 'Select a stage...' option)
+    appState.selectedStage = null;
   }
 }
 
@@ -703,8 +703,8 @@ async function fetchNextQuestion() {
     // Always include the book parameter
     queryParams += `&book=${appState.selectedBook}`;
     
-    if (appState.practiceMode === 'chapter' && appState.selectedChapter) {
-      queryParams += `&chapter=${appState.selectedChapter}`;
+    if (appState.practiceMode === 'stage' && appState.selectedStage) {
+      queryParams += `&stage=${appState.selectedStage}`;
     } else if (appState.practiceMode === 'weak-words' && appState.currentUser) {
       queryParams += `&mode=weak-words&username=${appState.currentUser}`;
     } else if (appState.currentUser) {
@@ -712,7 +712,7 @@ async function fetchNextQuestion() {
     }
     
     debugLog.info('fetchNextQuestion', 'Fetching next question', { queryParams });
-    const response = await fetch(`/api/practice/next-question${queryParams}`);
+    const response = await fetch(apiUrl(`/api/practice/next-question${queryParams}`));
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -783,7 +783,7 @@ async function submitAnswer(selectedAnswer, format) {
     
     debugLog.info('submitAnswer', 'Submitting answer', requestData);
     
-    const response = await fetch('/api/practice/submit-answer', {
+    const response = await fetch(apiUrl('/api/practice/submit-answer'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -823,32 +823,32 @@ async function submitAnswer(selectedAnswer, format) {
 }
 
 // UI Rendering Functions
-function renderChapters(chapters) {
-  const chapterSelect = elements.chapterSelect;
-  chapterSelect.innerHTML = '<option value="">Select a chapter...</option>';
+function renderStages(stages) {
+  const stageSelect = elements.stageSelect;
+  stageSelect.innerHTML = '<option value="">Select a stage...</option>';
   
-  if (!chapters || chapters.length === 0) {
-    chapterSelect.innerHTML = '<option value="">No chapters available</option>';
+  if (!stages || stages.length === 0) {
+    stageSelect.innerHTML = '<option value="">No stages available</option>';
     return;
   }
   
-  chapters.forEach(chapter => {
+  stages.forEach(stage => {
     const option = document.createElement('option');
-    option.value = chapter.chapterNumber;
-    option.textContent = `Chapter ${chapter.chapterNumber}: ${chapter.chapterTitle}`;
-    chapterSelect.appendChild(option);
+    option.value = stage.stageNumber;
+    option.textContent = `Stage ${stage.stageNumber}: ${stage.stageTitle}`;
+    stageSelect.appendChild(option);
   });
   
-  // Select the previously selected chapter if it's available in the new book
-  if (appState.selectedChapter) {
-    const chapterExists = Array.from(chapterSelect.options).some(
-      option => option.value === appState.selectedChapter.toString()
+  // Select the previously selected stage if it's available in the new book
+  if (appState.selectedStage) {
+    const stageExists = Array.from(stageSelect.options).some(
+      option => option.value === appState.selectedStage.toString()
     );
     
-    if (chapterExists) {
-      chapterSelect.value = appState.selectedChapter;
+    if (stageExists) {
+      stageSelect.value = appState.selectedStage;
     } else {
-      appState.selectedChapter = null;
+      appState.selectedStage = null;
     }
   }
 }
@@ -1120,7 +1120,7 @@ async function handleLogin() {
   }
   
   try {
-    const response = await fetch('/api/users/login', {
+    const response = await fetch(apiUrl('/api/users/login'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -1141,14 +1141,14 @@ async function handleLogin() {
     // Update UI
     updateUIAfterLogin(userData);
     
-    // Select chapter 1 by default if none selected
-    if (!appState.selectedChapter) {
-      appState.selectedChapter = 1;
+    // Select stage 1 by default if none selected
+    if (!appState.selectedStage) {
+      appState.selectedStage = 1;
       
-      // Find and select the first chapter
-      const firstChapter = document.querySelector('.chapter-item');
-      if (firstChapter) {
-        firstChapter.classList.add('selected');
+      // Find and select the first stage
+      const firstStage = document.querySelector('.stage-item');
+      if (firstStage) {
+        firstStage.classList.add('selected');
       }
     }
     
@@ -1186,13 +1186,13 @@ function updateUIAfterLogin(userData) {
   
   // Show progress section
   elements.progressSection.classList.remove('hidden');
-  elements.currentChapterSpan.textContent = userData.chapterProgress || 1;
+  elements.currentStageSpan.textContent = userData.stageProgress || 1;
 }
 
 async function fetchUserProgress(username) {
   try {
     debugLog.info('fetchUserProgress', `Fetching progress for user: ${username}`);
-    const response = await fetch(`/api/users/${username}/progress`);
+    const response = await fetch(apiUrl(`/api/users/${username}/progress`));
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -1279,11 +1279,11 @@ function startPractice(mode) {
     return;
   }
   
-  if (mode === 'chapter') {
-    if (!appState.selectedChapter) {
-      showError('Please select a chapter from the dropdown first.');
-      // Focus on the chapter select to help the user
-      elements.chapterSelect.focus();
+  if (mode === 'stage') {
+    if (!appState.selectedStage) {
+      showError('Please select a stage from the dropdown first.');
+      // Focus on the stage select to help the user
+      elements.stageSelect.focus();
       return;
     }
   }
@@ -1292,8 +1292,8 @@ function startPractice(mode) {
   appState.practiceMode = mode;
   
   // Display mode in UI
-  const modeDisplay = mode === 'chapter' 
-    ? `${appState.selectedBook.toUpperCase()} Chapter ${appState.selectedChapter}` 
+  const modeDisplay = mode === 'stage' 
+    ? `${appState.selectedBook.toUpperCase()} Stage ${appState.selectedStage}` 
     : 'Weak Words';
   
   console.log(`Starting practice in ${modeDisplay} mode`);

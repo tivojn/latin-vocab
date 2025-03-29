@@ -1,8 +1,8 @@
 {
-    "chapters": [
+    "stages": [
       {
-        "chapterNumber": 13,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 13",
+        "stageNumber": 13,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 13",
         "words": [
           {
             "latin": "adveniō",
@@ -139,8 +139,8 @@
         ]
       },
       {
-        "chapterNumber": 14,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 14",
+        "stageNumber": 14,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 14",
         "words": [
           {
             "latin": "aliquid",
@@ -283,8 +283,8 @@
         ]
       },
       {
-        "chapterNumber": 15,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 15",
+        "stageNumber": 15,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 15",
         "words": [
           {
             "latin": "agmen",
@@ -421,8 +421,8 @@
         ]
       },
       {
-        "chapterNumber": 16,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 16",
+        "stageNumber": 16,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 16",
         "words": [
           {
             "latin": "aedificō",
@@ -565,8 +565,8 @@
         ]
       },
       {
-        "chapterNumber": 17,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 17",
+        "stageNumber": 17,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 17",
         "words": [
           {
             "latin": "ā, ab",
@@ -703,8 +703,8 @@
         ]
       },
       {
-        "chapterNumber": 18,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 18",
+        "stageNumber": 18,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 18",
         "words": [
           {
             "latin": "audeō",
@@ -841,8 +841,8 @@
         ]
       },
       {
-        "chapterNumber": 19,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 19",
+        "stageNumber": 19,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 19",
         "words": [
           {
             "latin": "amō",
@@ -991,8 +991,8 @@
         ]
       },
       {
-        "chapterNumber": 20,
-        "chapterTitle": "Cambridge Latin Course Book 2 - Checklist 20",
+        "stageNumber": 20,
+        "stageTitle": "Cambridge Latin Course Book 2 - Checklist 20",
         "words": [
           {
             "latin": "adeō",

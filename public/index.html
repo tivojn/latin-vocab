@@ -16,11 +16,11 @@
   <div id="app" class="container mx-auto p-4 max-w-5xl">
     <!-- Header -->
     <header class="bg-white rounded-lg shadow-md p-4 mb-6">
-      <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-800">
+      <div class="flex flex-col sm:flex-row justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 sm:mb-0">
           <span class="text-purple-600">Latin</span> Vocabulary
         </h1>
-        <div id="user-section">
+        <div id="user-section" class="w-full sm:w-auto">
           <!-- Login Form (shown when not logged in) -->
           <div id="login-form" class="flex items-center space-x-2">
             <input type="text" id="username-input" placeholder="Username" 
@@ -31,9 +31,9 @@
           </div>
           
           <!-- User Info (shown when logged in) -->
-          <div id="user-info" class="hidden flex items-center space-x-2">
+          <div id="user-info" class="hidden flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
             <span class="text-gray-700">Logged in as: <span id="current-user" class="font-bold"></span></span>
-            <button id="logout-btn" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300 transition">
+            <button id="logout-btn" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300 transition w-full sm:w-auto">
               Logout
             </button>
           </div>
@@ -48,7 +48,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
             <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
           </svg>
-          Books & Chapters
+          Books & Stages
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Book Selection -->
@@ -60,12 +60,12 @@
               <option value="bk2">Cambridge Latin Course Book 2</option>
             </select>
           </div>
-          <!-- Chapter Selection -->
+          <!-- Stage Selection -->
           <div>
-            <label for="chapter-select" class="block text-gray-700 text-sm font-medium mb-2">Select Chapter:</label>
-            <select id="chapter-select" class="w-full rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
-              <!-- Chapters will be loaded here -->
-              <option value="">Select a chapter...</option>
+            <label for="stage-select" class="block text-gray-700 text-sm font-medium mb-2">Select Stage:</label>
+            <select id="stage-select" class="w-full rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
+              <!-- Stages will be loaded here -->
+              <option value="">Select a stage...</option>
             </select>
           </div>
         </div>
@@ -85,8 +85,8 @@
             
             <!-- Practice Buttons -->
             <div class="space-y-3 mb-4">
-              <button id="practice-chapter-btn" class="w-full bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition">
-                Practice Selected Chapter
+              <button id="practice-stage-btn" class="w-full bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition">
+                Practice Selected Stage
               </button>
               <button id="practice-weak-btn" class="w-full bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition">
                 Practice Weak Words
@@ -108,8 +108,8 @@
             <div id="progress-section" class="hidden mt-4 pt-4 border-t border-gray-200">
               <h3 class="font-medium text-gray-700 mb-2">Your Progress</h3>
               <div class="text-sm text-gray-600">
-                <p>Current Chapter: <span id="current-chapter" class="font-medium">1</span> 
-                  <a href="#" id="chapter-vocab-link" class="text-purple-600 hover:underline ml-1">View All</a>
+                <p>Current Stage: <span id="current-stage" class="font-medium">1</span> 
+                  <a href="#" id="stage-vocab-link" class="text-purple-600 hover:underline ml-1">View All</a>
                 </p>
                 <p>Words Mastered: <span id="mastered-count" class="font-medium">0</span> 
                   <a href="#" id="mastered-words-link" class="text-purple-600 hover:underline ml-1">View List</a>
@@ -136,7 +136,7 @@
               <ol class="list-decimal list-inside text-blue-700 ml-2">
                 <li>Login with your username</li>
                 <li>Select a book (Book 1 or Book 2)</li>
-                <li>Choose a chapter to study</li>
+                <li>Choose a stage to study</li>
                 <li>Select a question format</li>
                 <li>Start practicing!</li>
               </ol>
@@ -146,7 +146,7 @@
             </p>
             <div class="bg-purple-50 border-l-4 border-purple-500 p-4">
               <p class="text-purple-700 font-medium">New Feature:</p>
-              <p class="text-purple-700">Now supporting both Cambridge Latin Course Book 1 (Chapters 1-12) and Book 2 (Chapters 13-20) vocabulary!</p>
+              <p class="text-purple-700">Now supporting both Cambridge Latin Course Book 1 (Stages 1-12) and Book 2 (Stages 13-20) vocabulary!</p>
             </div>
           </div>
           
@@ -215,6 +215,7 @@
     </footer>
   </div>
   
+  <script src="api-helper.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
