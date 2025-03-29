@@ -1,3 +1,22 @@
+// Check if users data exists and create it if not
+function ensureUsersData() {
+  const usersData = readJsonFile(USERS_FILE);
+  
+  if (!usersData) {
+    // Create initial users structure
+    const initialData = { users: [] };
+    writeJsonFile(USERS_FILE, initialData);
+    return initialData;
+  }
+  
+  if (!usersData.users) {
+    usersData.users = [];
+    writeJsonFile(USERS_FILE, usersData);
+  }
+  
+  return usersData;
+}
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -749,10 +768,11 @@ app.post('/api/practice/submit-answer', (req, res) => {
 app.get('/api/users/:username/progress', (req, res) => {
   const { username } = req.params;
   
-  const usersData = readJsonFile(USERS_FILE);
+  // Get user data with error handling
+  const usersData = ensureUsersData();
   
   if (!usersData) {
-    return res.status(500).json({ error: 'Failed to read user data' });
+    return res.status(500).json({ error: 'Failed to read or create user data' });
   }
   
   const user = usersData.users.find(u => u.username === username);
@@ -761,10 +781,23 @@ app.get('/api/users/:username/progress', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
   
-  res.json({
-    stageProgress: user.stageProgress,
-    vocabProgress: user.vocabProgress
-  });
+  // Migrate old structure if needed
+  if (user.chapterProgress !== undefined && user.stageProgress === undefined) {
+    user.stageProgress = user.chapterProgress;
+    delete user.chapterProgress;
+    
+    // Save the updated user data
+    writeJsonFile(USERS_FILE, usersData);
+  }
+  
+  // Get user progress
+  // Add backward compatibility for older user records
+  const progress = {
+    stageProgress: user.stageProgress || user.chapterProgress || 1,
+    vocabProgress: user.vocabProgress || {}
+  };
+  
+  res.json(progress);
 });
 
 app.post('/api/users/login', (req, res) => {
@@ -774,15 +807,29 @@ app.post('/api/users/login', (req, res) => {
     return res.status(400).json({ error: 'Username is required' });
   }
   
-  const usersData = readJsonFile(USERS_FILE);
+  // Get user data with error handling
+  const usersData = ensureUsersData();
   
   if (!usersData) {
-    return res.status(500).json({ error: 'Failed to read user data' });
+    return res.status(500).json({ error: 'Failed to read or create user data' });
   }
   
   let user = usersData.users.find(u => u.username === username);
   
-  if (!user) {
+  // If user exists, ensure they have stageProgress (migration from chapterProgress)
+  if (user) {
+    // Migrate old user format if needed
+    if (user.chapterProgress !== undefined && user.stageProgress === undefined) {
+      user.stageProgress = user.chapterProgress;
+      delete user.chapterProgress;
+      
+      // Save the updated user data
+      if (!writeJsonFile(USERS_FILE, usersData)) {
+        console.warn('Failed to update user with migrated stageProgress');
+      }
+    }
+  } else {
+    // Create new user
     user = {
       username,
       passwordHash: "tempHash",
@@ -797,9 +844,10 @@ app.post('/api/users/login', (req, res) => {
     }
   }
   
+  // Return user data with backward compatibility
   res.json({
     username: user.username,
-    stageProgress: user.stageProgress
+    stageProgress: user.stageProgress || user.chapterProgress || 1
   });
 });
 
@@ -815,6 +863,25 @@ app.get('/api/debug/environment', (req, res) => {
     },
     usersFilePath: USERS_FILE
   });
+});
+
+// Helper endpoint to debug users
+app.get('/api/debug/users', (req, res) => {
+  const usersData = readJsonFile(USERS_FILE);
+  
+  if (!usersData) {
+    return res.status(500).json({ error: 'Failed to read users data' });
+  }
+  
+  // Sanitize sensitive information if needed
+  const sanitizedUsers = usersData.users.map(user => ({
+    username: user.username,
+    hasStageProgress: 'stageProgress' in user,
+    hasChapterProgress: 'chapterProgress' in user,
+    vocabProgressCount: Object.keys(user.vocabProgress || {}).length
+  }));
+  
+  res.json({ users: sanitizedUsers });
 });
 
 app.get('/api/debug/files', (req, res) => {

@@ -1138,6 +1138,12 @@ async function handleLogin() {
     // Update app state
     appState.currentUser = username;
     
+    // Handle backward compatibility with older API responses
+    // that might have chapterProgress instead of stageProgress
+    if (userData.chapterProgress && !userData.stageProgress) {
+      userData.stageProgress = userData.chapterProgress;
+    }
+    
     // Update UI
     updateUIAfterLogin(userData);
     
@@ -1206,6 +1212,11 @@ async function fetchUserProgress(username) {
     
     const progressData = await response.json();
     debugLog.success('fetchUserProgress', 'User progress received', progressData);
+    
+    // Handle backward compatibility
+    if (progressData.chapterProgress && !progressData.stageProgress) {
+      progressData.stageProgress = progressData.chapterProgress;
+    }
     
     // Update progress stats
     updateProgressStats(progressData);
