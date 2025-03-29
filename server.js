@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 app.use(bodyParser.json());
 
 const VOCABULARY_FILES = {
@@ -949,6 +950,25 @@ app.get('/api/debug/create-test-user', (req, res) => {
   }
 });
 
+// Serve index.html for client-side routing (before 404 handler)
+app.get('*', (req, res, next) => {
+  // Skip API routes
+  if (req.path.startsWith('/api/')) {
+    return next();
+  }
+  
+  // Skip direct file requests for paths with file extensions
+  if (req.path.includes('.')) {
+    const filePath = path.join(__dirname, 'public', req.path);
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      return next();
+    }
+  }
+  
+  // Otherwise serve index.html
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Handle 404 errors - must be placed after all other routes
 app.use((req, res) => {
   // Check if the request is for an API endpoint
@@ -973,6 +993,12 @@ app.use((err, req, res, next) => {
   res.status(500).send('Server error. Please try again later.');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Start server only in non-production environment
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+// Export the Express app for Vercel
+module.exports = app;
