@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Path Debugging - Latin Vocabulary</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+  <div class="container mx-auto max-w-5xl bg-white rounded-lg shadow-md p-6">
+    <h1 class="text-2xl font-bold text-purple-700 mb-4">Latin Vocabulary Path Debugging</h1>
+    
+    <div class="mb-8 bg-gray-50 p-4 rounded-md">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Server Environment</h2>
+      <div id="env-info" class="font-mono text-sm">Loading...</div>
+    </div>
+    
+    <div class="mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Vocabulary File Tests</h2>
+      <div id="file-tests" class="font-mono text-sm">Loading file access tests...</div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">API Routes</h2>
+        <div id="api-routes" class="font-mono text-sm bg-gray-50 p-4 rounded-md h-64 overflow-y-auto">Loading...</div>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">File Access</h2>
+        <div id="file-access" class="font-mono text-sm bg-gray-50 p-4 rounded-md h-64 overflow-y-auto">Loading...</div>
+      </div>
+    </div>
+    
+    <div class="flex justify-between">
+      <a href="/" class="text-purple-600 hover:underline">Back to Main App</a>
+      <a href="/api-test" class="text-purple-600 hover:underline">API Testing Tool</a>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const envInfo = document.getElementById('env-info');
+      const fileTests = document.getElementById('file-tests');
+      const apiRoutes = document.getElementById('api-routes');
+      const fileAccess = document.getElementById('file-access');
+      
+      // Display environment info
+      try {
+        const envResponse = await fetch('/api/debug/environment');
+        if (envResponse.ok) {
+          const data = await envResponse.json();
+          envInfo.innerHTML = `
+            <p>Node Environment: ${data.nodeEnv}</p>
+            <p>Vercel Environment: ${data.isVercel ? 'Yes' : 'No'}</p>
+            <p>Server Root Path: ${data.rootPath}</p>
+            <p>Vocabulary Files Path: ${data.vocabFilesPath}</p>
+            <p>Users File Path: ${data.usersFilePath}</p>
+          `;
+        } else {
+          envInfo.innerHTML = `<p class="text-red-500">Error fetching environment info: ${envResponse.status}</p>`;
+        }
+      } catch (error) {
+        envInfo.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+      }
+      
+      // Test file access
+      try {
+        const fileResponse = await fetch('/api/debug/files');
+        if (fileResponse.ok) {
+          const data = await fileResponse.json();
+          
+          let html = '<ul class="list-disc list-inside">';
+          for (const [file, result] of Object.entries(data.files)) {
+            const color = result.exists ? 'text-green-500' : 'text-red-500';
+            const icon = result.exists ? '✓' : '✗';
+            
+            html += `<li class="${color}">
+              <span class="font-bold">${icon} ${file}:</span> 
+              ${result.exists ? 'Exists' : 'Not found'} 
+              ${result.message ? `(${result.message})` : ''}
+            </li>`;
+          }
+          html += '</ul>';
+          
+          fileTests.innerHTML = html;
+        } else {
+          fileTests.innerHTML = `<p class="text-red-500">Error testing files: ${fileResponse.status}</p>`;
+        }
+      } catch (error) {
+        fileTests.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+      }
+      
+      // Get API routes
+      try {
+        const routesResponse = await fetch('/api/debug/routes');
+        if (routesResponse.ok) {
+          const data = await routesResponse.json();
+          
+          let html = '<ul class="list-disc list-inside">';
+          for (const route of data.routes) {
+            html += `<li>
+              <span class="font-bold">${route.method}</span>
+              <span class="text-blue-500">${route.path}</span>
+            </li>`;
+          }
+          html += '</ul>';
+          
+          apiRoutes.innerHTML = html;
+        } else {
+          apiRoutes.innerHTML = `<p class="text-red-500">Error fetching routes: ${routesResponse.status}</p>`;
+        }
+      } catch (error) {
+        apiRoutes.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+      }
+      
+      // Get file access info
+      try {
+        const fileAccessResponse = await fetch('/api/debug/access');
+        if (fileAccessResponse.ok) {
+          const data = await fileAccessResponse.json();
+          
+          let html = '<ul class="list-disc list-inside">';
+          
+          html += `<li><span class="font-bold">Current Directory:</span> ${data.currentDir}</li>`;
+          html += `<li><span class="font-bold">Parent Directory:</span> ${data.parentDir}</li>`;
+          
+          if (data.dirContents) {
+            html += `<li><span class="font-bold">Directory Contents:</span><ul class="ml-4 list-disc">`;
+            for (const item of data.dirContents) {
+              html += `<li>${item.type === 'directory' ? '📁' : '📄'} ${item.name}</li>`;
+            }
+            html += `</ul></li>`;
+          }
+          
+          html += '</ul>';
+          
+          fileAccess.innerHTML = html;
+        } else {
+          fileAccess.innerHTML = `<p class="text-red-500">Error fetching file access info: ${fileAccessResponse.status}</p>`;
+        }
+      } catch (error) {
+        fileAccess.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

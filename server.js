@@ -58,9 +58,33 @@ function filterMasteredWords(wordsPool, username) {
 }
 
 function readJsonFile(filePath) {
+  // First check in-memory file cache for Vercel environment
+  if (process.env.VERCEL && global.inMemoryFiles && global.inMemoryFiles[filePath]) {
+    console.log(`Reading ${filePath} from in-memory cache`);
+    return global.inMemoryFiles[filePath];
+  }
+  
   try {
     if (!fs.existsSync(filePath)) {
       console.error(`File does not exist: ${filePath}`);
+      
+      // Handle missing file with fallbacks in Vercel environment
+      if (process.env.VERCEL) {
+        const fileName = path.basename(filePath);
+        
+        // Create fallback data for known files
+        if (fileName === 'users.json') {
+          console.log('Creating fallback users.json');
+          const fallbackUsers = { users: [] };
+          writeJsonFile(filePath, fallbackUsers);
+          return fallbackUsers;
+        } 
+        else if (fileName === 'vocabulary.json' || fileName === 'vocabulary-bk2.json') {
+          console.log(`Missing vocabulary file: ${fileName}`);
+          return { chapters: [] };
+        }
+      }
+      
       return null;
     }
     
@@ -75,16 +99,66 @@ function readJsonFile(filePath) {
     }
   } catch (error) {
     console.error(`Error reading file ${filePath}:`, error);
+    
+    // Check for specific errors in Vercel environment
+    if (process.env.VERCEL) {
+      const fileName = path.basename(filePath);
+      
+      // Return fallback data for known files
+      if (fileName === 'users.json') {
+        console.log('Returning fallback users.json due to error');
+        return { users: [] };
+      } 
+      else if (fileName === 'vocabulary.json' || fileName === 'vocabulary-bk2.json') {
+        console.log(`Returning empty chapters for ${fileName} due to error`);
+        return { chapters: [] };
+      }
+    }
+    
     return null;
   }
 }
 
 function writeJsonFile(filePath, data) {
   try {
+    // If directory doesn't exist, try to create it
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      try {
+        fs.mkdirSync(dir, { recursive: true });
+      } catch (dirError) {
+        console.error(`Cannot create directory ${dir}:`, dirError);
+        
+        // In Vercel, we might not have write permissions to create directories
+        if (process.env.VERCEL) {
+          console.log('Using in-memory fallback due to Vercel filesystem restrictions');
+          // Store in a global variable as in-memory fallback
+          if (!global.inMemoryFiles) {
+            global.inMemoryFiles = {};
+          }
+          global.inMemoryFiles[filePath] = data;
+          return true;
+        }
+        
+        return false;
+      }
+    }
+    
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (error) {
     console.error(`Error writing file ${filePath}:`, error);
+    
+    // In Vercel, use in-memory storage as fallback
+    if (process.env.VERCEL) {
+      console.log('Using in-memory fallback due to Vercel filesystem restrictions');
+      if (!global.inMemoryFiles) {
+        global.inMemoryFiles = {};
+      }
+      global.inMemoryFiles[filePath] = data;
+      return true;
+    }
+    
     return false;
   }
 }
@@ -715,6 +789,164 @@ app.post('/api/users/login', (req, res) => {
     username: user.username,
     chapterProgress: user.chapterProgress
   });
+});
+
+// Debug API endpoints
+app.get('/api/debug/environment', (req, res) => {
+  res.json({
+    nodeEnv: process.env.NODE_ENV || 'development',
+    isVercel: !!process.env.VERCEL,
+    rootPath: __dirname,
+    vocabFilesPath: {
+      bk1: VOCABULARY_FILES['bk1'],
+      bk2: VOCABULARY_FILES['bk2']
+    },
+    usersFilePath: USERS_FILE
+  });
+});
+
+app.get('/api/debug/files', (req, res) => {
+  const files = {
+    'vocabulary.json': {
+      exists: fs.existsSync(VOCABULARY_FILES['bk1']),
+      message: ''
+    },
+    'vocabulary-bk2.json': {
+      exists: fs.existsSync(VOCABULARY_FILES['bk2']),
+      message: ''
+    },
+    'users.json': {
+      exists: fs.existsSync(USERS_FILE),
+      message: ''
+    },
+    'config.js': {
+      exists: fs.existsSync(path.join(__dirname, 'config.js')),
+      message: ''
+    },
+    'public/index.html': {
+      exists: fs.existsSync(path.join(__dirname, 'public', 'index.html')),
+      message: ''
+    },
+    'public/app.js': {
+      exists: fs.existsSync(path.join(__dirname, 'public', 'app.js')),
+      message: ''
+    },
+    'public/styles.css': {
+      exists: fs.existsSync(path.join(__dirname, 'public', 'styles.css')),
+      message: ''
+    }
+  };
+  
+  // Try to read the first few bytes of each file to check permissions
+  for (const [file, result] of Object.entries(files)) {
+    if (result.exists) {
+      try {
+        const filePath = file.includes('public/') 
+          ? path.join(__dirname, file)
+          : (file === 'vocabulary.json' 
+              ? VOCABULARY_FILES['bk1'] 
+              : (file === 'vocabulary-bk2.json' 
+                  ? VOCABULARY_FILES['bk2'] 
+                  : (file === 'users.json' 
+                      ? USERS_FILE 
+                      : path.join(__dirname, file))));
+        
+        const buffer = Buffer.alloc(10);
+        const fd = fs.openSync(filePath, 'r');
+        fs.readSync(fd, buffer, 0, 10, 0);
+        fs.closeSync(fd);
+        
+        result.message = 'Readable';
+      } catch (error) {
+        result.message = `Error: ${error.code || error.message}`;
+      }
+    }
+  }
+  
+  res.json({ files });
+});
+
+app.get('/api/debug/routes', (req, res) => {
+  // Map Express routes
+  const routes = [];
+  
+  app._router.stack.forEach(middleware => {
+    if (middleware.route) { // routes registered directly on the app
+      routes.push({
+        path: middleware.route.path,
+        method: Object.keys(middleware.route.methods)[0].toUpperCase()
+      });
+    } else if (middleware.name === 'router') { // router middleware
+      middleware.handle.stack.forEach(handler => {
+        if (handler.route) {
+          routes.push({
+            path: handler.route.path,
+            method: Object.keys(handler.route.methods)[0].toUpperCase()
+          });
+        }
+      });
+    }
+  });
+  
+  res.json({ routes: routes.filter(route => route.path.startsWith('/api')) });
+});
+
+app.get('/api/debug/access', (req, res) => {
+  const result = {
+    currentDir: __dirname,
+    parentDir: path.dirname(__dirname),
+    dirContents: []
+  };
+  
+  try {
+    const contents = fs.readdirSync(__dirname);
+    result.dirContents = contents.map(item => {
+      const itemPath = path.join(__dirname, item);
+      return {
+        name: item,
+        type: fs.statSync(itemPath).isDirectory() ? 'directory' : 'file'
+      };
+    });
+  } catch (error) {
+    result.error = error.message;
+  }
+  
+  res.json(result);
+});
+
+// Simple route to create a test user in users.json if it doesn't exist
+app.get('/api/debug/create-test-user', (req, res) => {
+  try {
+    const usersData = readJsonFile(USERS_FILE) || { users: [] };
+    
+    if (!usersData.users) {
+      usersData.users = [];
+    }
+    
+    // Check if test_user already exists
+    const userExists = usersData.users.some(user => user.username === 'test_user');
+    
+    if (!userExists) {
+      // Add test user
+      usersData.users.push({
+        username: 'test_user',
+        passwordHash: 'test_hash',
+        chapterProgress: 1,
+        vocabProgress: {}
+      });
+      
+      // Write back to file
+      if (writeJsonFile(USERS_FILE, usersData)) {
+        res.json({ success: true, message: 'Test user created successfully' });
+      } else {
+        res.status(500).json({ success: false, message: 'Failed to write user data' });
+      }
+    } else {
+      res.json({ success: true, message: 'Test user already exists' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // Handle 404 errors - must be placed after all other routes

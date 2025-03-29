@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Testing Tool - Latin Vocabulary</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    .log-entry { margin-bottom: 8px; padding: 8px; border-radius: 4px; }
+    .log-success { background-color: #d1fae5; border-left: 4px solid #10b981; }
+    .log-error { background-color: #fee2e2; border-left: 4px solid #ef4444; }
+    .log-info { background-color: #e0f2fe; border-left: 4px solid #0ea5e9; }
+    pre { white-space: pre-wrap; word-break: break-all; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+  <div class="container mx-auto max-w-5xl bg-white rounded-lg shadow-md p-6">
+    <h1 class="text-2xl font-bold text-purple-700 mb-4">Latin Vocabulary API Testing Tool</h1>
+    
+    <div class="mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Test API Endpoints</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <h3 class="font-medium text-gray-700 mb-2">Endpoint URL</h3>
+          <input id="endpoint-url" type="text" class="w-full p-2 border border-gray-300 rounded-md" 
+            value="/api/vocabulary/chapters" placeholder="/api/endpoint/path">
+        </div>
+        <div>
+          <h3 class="font-medium text-gray-700 mb-2">Method</h3>
+          <select id="http-method" class="w-full p-2 border border-gray-300 rounded-md">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+          </select>
+        </div>
+      </div>
+      
+      <div id="post-body-container" class="mb-4 hidden">
+        <h3 class="font-medium text-gray-700 mb-2">Request Body (JSON)</h3>
+        <textarea id="request-body" class="w-full p-2 border border-gray-300 rounded-md h-32 font-mono" 
+          placeholder='{"key": "value"}'></textarea>
+      </div>
+      
+      <div class="mb-4">
+        <h3 class="font-medium text-gray-700 mb-2">Additional Query Parameters</h3>
+        <div id="params-container">
+          <div class="flex mb-2 param-row">
+            <input type="text" class="w-1/3 p-2 border border-gray-300 rounded-l-md param-key" placeholder="key">
+            <input type="text" class="w-2/3 p-2 border border-gray-300 rounded-r-md param-value" placeholder="value">
+          </div>
+        </div>
+        <button id="add-param" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md mt-2 hover:bg-gray-300">
+          + Add Parameter
+        </button>
+      </div>
+      
+      <div class="flex justify-between">
+        <button id="send-request" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">
+          Send Request
+        </button>
+        <button id="clear-logs" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">
+          Clear Logs
+        </button>
+      </div>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Quick Tests</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+        <button class="quick-test bg-purple-100 text-purple-700 p-2 rounded-md hover:bg-purple-200" 
+          data-endpoint="/api/vocabulary/books">
+          Get Books
+        </button>
+        <button class="quick-test bg-purple-100 text-purple-700 p-2 rounded-md hover:bg-purple-200" 
+          data-endpoint="/api/vocabulary/chapters?book=bk1">
+          Get Book 1 Chapters
+        </button>
+        <button class="quick-test bg-purple-100 text-purple-700 p-2 rounded-md hover:bg-purple-200" 
+          data-endpoint="/api/vocabulary/chapters/1?book=bk1">
+          Get Chapter 1 (Book 1)
+        </button>
+        <button class="quick-test bg-purple-100 text-purple-700 p-2 rounded-md hover:bg-purple-200" 
+          data-method="POST" data-endpoint="/api/users/login" data-body='{"username": "test_user"}'>
+          Login (test_user)
+        </button>
+        <button class="quick-test bg-purple-100 text-purple-700 p-2 rounded-md hover:bg-purple-200" 
+          data-endpoint="/api/users/test_user/progress">
+          Get Progress (test_user)
+        </button>
+        <button class="quick-test bg-purple-100 text-purple-700 p-2 rounded-md hover:bg-purple-200" 
+          data-endpoint="/api/practice/next-question?username=test_user&chapter=1&book=bk1">
+          Get Question (Ch.1)
+        </button>
+      </div>
+    </div>
+    
+    <div>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Response Logs</h2>
+      <div id="logs-container" class="bg-gray-50 p-4 rounded-md h-96 overflow-y-auto font-mono text-sm">
+        <div class="log-entry log-info">
+          <p>API Testing tool loaded. Make a request to see logs.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-4 text-right">
+      <a href="/" class="text-purple-600 hover:underline">Back to Main App</a>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM elements
+      const endpointUrl = document.getElementById('endpoint-url');
+      const httpMethod = document.getElementById('http-method');
+      const requestBody = document.getElementById('request-body');
+      const postBodyContainer = document.getElementById('post-body-container');
+      const paramsContainer = document.getElementById('params-container');
+      const addParamBtn = document.getElementById('add-param');
+      const sendRequestBtn = document.getElementById('send-request');
+      const clearLogsBtn = document.getElementById('clear-logs');
+      const logsContainer = document.getElementById('logs-container');
+      const quickTestBtns = document.querySelectorAll('.quick-test');
+      
+      // Show/hide request body based on HTTP method
+      httpMethod.addEventListener('change', () => {
+        if (httpMethod.value === 'POST') {
+          postBodyContainer.classList.remove('hidden');
+        } else {
+          postBodyContainer.classList.add('hidden');
+        }
+      });
+      
+      // Add parameter row
+      addParamBtn.addEventListener('click', () => {
+        const paramRow = document.createElement('div');
+        paramRow.className = 'flex mb-2 param-row';
+        paramRow.innerHTML = `
+          <input type="text" class="w-1/3 p-2 border border-gray-300 rounded-l-md param-key" placeholder="key">
+          <input type="text" class="w-2/3 p-2 border border-gray-300 rounded-r-md param-value" placeholder="value">
+          <button class="remove-param bg-red-500 text-white px-2 ml-1 rounded">×</button>
+        `;
+        
+        paramRow.querySelector('.remove-param').addEventListener('click', () => {
+          paramRow.remove();
+        });
+        
+        paramsContainer.appendChild(paramRow);
+      });
+      
+      // Clear logs
+      clearLogsBtn.addEventListener('click', () => {
+        logsContainer.innerHTML = '';
+      });
+      
+      // Build query string from parameters
+      function buildQueryString() {
+        const params = new URLSearchParams();
+        
+        document.querySelectorAll('.param-row').forEach(row => {
+          const key = row.querySelector('.param-key').value.trim();
+          const value = row.querySelector('.param-value').value.trim();
+          
+          if (key && value) {
+            params.append(key, value);
+          }
+        });
+        
+        const queryString = params.toString();
+        return queryString ? `?${queryString}` : '';
+      }
+      
+      // Add log entry
+      function addLogEntry(type, content) {
+        const entry = document.createElement('div');
+        entry.className = `log-entry log-${type}`;
+        
+        const timestamp = new Date().toLocaleTimeString();
+        const header = document.createElement('div');
+        header.className = 'font-bold';
+        header.textContent = `[${timestamp}] ${type.toUpperCase()}`;
+        entry.appendChild(header);
+        
+        if (typeof content === 'object') {
+          const pre = document.createElement('pre');
+          pre.textContent = JSON.stringify(content, null, 2);
+          entry.appendChild(pre);
+        } else {
+          const text = document.createElement('p');
+          text.textContent = content;
+          entry.appendChild(text);
+        }
+        
+        logsContainer.prepend(entry);
+      }
+      
+      // Send API request
+      async function sendApiRequest(endpoint, method, body = null, additionalParams = '') {
+        addLogEntry('info', `Sending ${method} request to ${endpoint}${additionalParams}`);
+        
+        try {
+          const options = {
+            method,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          
+          if (body && method === 'POST') {
+            options.body = body;
+          }
+          
+          const url = endpoint + additionalParams;
+          const response = await fetch(url, options);
+          const contentType = response.headers.get('content-type');
+          
+          let data;
+          if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+          } else {
+            data = await response.text();
+          }
+          
+          if (response.ok) {
+            addLogEntry('success', `Status: ${response.status} ${response.statusText}`);
+            addLogEntry('success', data);
+          } else {
+            addLogEntry('error', `Status: ${response.status} ${response.statusText}`);
+            addLogEntry('error', data);
+          }
+        } catch (error) {
+          addLogEntry('error', `Request failed: ${error.message}`);
+        }
+      }
+      
+      // Send request button handler
+      sendRequestBtn.addEventListener('click', () => {
+        const endpoint = endpointUrl.value.trim();
+        const method = httpMethod.value;
+        const queryString = buildQueryString();
+        let body = null;
+        
+        if (method === 'POST') {
+          try {
+            body = requestBody.value.trim();
+            // Test if it's valid JSON
+            JSON.parse(body);
+          } catch (error) {
+            addLogEntry('error', `Invalid JSON body: ${error.message}`);
+            return;
+          }
+        }
+        
+        sendApiRequest(endpoint, method, body, queryString);
+      });
+      
+      // Quick test buttons
+      quickTestBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const endpoint = btn.dataset.endpoint;
+          const method = btn.dataset.method || 'GET';
+          const body = btn.dataset.body || null;
+          
+          // Update UI to match the quick test
+          endpointUrl.value = endpoint;
+          httpMethod.value = method;
+          
+          if (method === 'POST') {
+            postBodyContainer.classList.remove('hidden');
+            requestBody.value = body;
+          } else {
+            postBodyContainer.classList.add('hidden');
+          }
+          
+          // Clear existing params
+          paramsContainer.innerHTML = `
+            <div class="flex mb-2 param-row">
+              <input type="text" class="w-1/3 p-2 border border-gray-300 rounded-l-md param-key" placeholder="key">
+              <input type="text" class="w-2/3 p-2 border border-gray-300 rounded-r-md param-value" placeholder="value">
+            </div>
+          `;
+          
+          // Send the request
+          sendApiRequest(endpoint, method, body);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
